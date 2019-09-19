@@ -253,4 +253,30 @@ public class Matriks{
 		//ALGORITMA
 		return (this.NB==this.NK);
 	}
+void ShrinkRow(int r){
+		int i,j;
+		
+		if(r!=this.NB){
+			for(i=r;i<=this.NB;i++){
+				for(j=1;j<=this.NK;j++){
+					this.el[i-1][j]=this.el[i][j];
+				}
+			}
+		}
+		this.NB-=1;
+	}
+	
+	void ShrinkCol(int c){
+		int i,j;
+		
+		if(c!=this.NK){
+			for(j=c;j<=this.NK;j++){
+				for(i=1;i<=this.NB;i++){
+					this.el[i][j-1]=this.el[i][j];
+				}
+			}
+		}
+		this.NK-=1;
+	}
+
 }
