@@ -149,7 +149,7 @@ public class Matriks{
 	void SwapBaris(int S, int D){
 		//KAMUS LOKAL
 		int j;
-		int tmp;
+		double tmp;
 		//ALGORITMA
 		for(j=1;j<=this.NK;j++){
 			tmp=this.el[s][j];
@@ -160,7 +160,7 @@ public class Matriks{
 	void SwapKolom(int S, int D){
 		//KAMUS LOKAL
 		int i;
-		int tmp;
+		double tmp;
 		//ALGORITMA
 		for(i=1;i<=this.NB;j++){
 			tmp=this.el[i][s];
