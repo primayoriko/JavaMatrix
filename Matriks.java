@@ -236,4 +236,16 @@ public class Matriks{
 			}
 		}
 	}
+	
+	void TambahKBaris(int RAw, int RAkh, int K){
+		//I.S : Matriks terdefinisi
+		//F.S : Menambahkan RAw dengan K kali RAkh
+		
+		//KAMUS LOKAL
+		int j;
+		//ALGORITMA
+		for(j=1;j<=this.NK;j++){
+			this.el[RAw][j] += K*this.el[RAkh][j];
+		}
+	}
 }
