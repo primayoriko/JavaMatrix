@@ -248,4 +248,9 @@ public class Matriks{
 			this.el[RAw][j] += K*this.el[RAkh][j];
 		}
 	}
+	
+	boolean IsBujurSangkar(Matriks M){
+		//ALGORITMA
+		return (this.NB==this.NK);
+	}
 }
