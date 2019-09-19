@@ -146,4 +146,26 @@ public class Matriks{
 		}
 		return eq;
 	}
+	void SwapBaris(int S, int D){
+		//KAMUS LOKAL
+		int j;
+		int tmp;
+		//ALGORITMA
+		for(j=1;j<=this.NK;j++){
+			tmp=this.el[s][j];
+			this.el[s][j]=this.el[d][j];
+			this.el[d][j]=tmp;
+		}
+	}
+	void SwapKolom(int S, int D){
+		//KAMUS LOKAL
+		int i;
+		int tmp;
+		//ALGORITMA
+		for(i=1;i<=this.NB;j++){
+			tmp=this.el[i][s];
+			this.el[i][s]=this.el[i][d];
+			this.el[i][d]=tmp;
+		}
+	}
 }
