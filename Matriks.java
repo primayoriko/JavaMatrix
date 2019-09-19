@@ -168,4 +168,59 @@ public class Matriks{
 			this.el[i][d]=tmp;
 		}
 	}
+	
+	int SearchBaris(Matriks M, int i, int X){
+		//Mencari X di baris ke-i pada matriks M
+		//return indeks, jika tidak ada akan mengembalikan nilai 0
+		
+		//KAMUS LOKAL
+		int j,indeks;
+		boolean found;
+		//ALGORITMA
+		indeks=0;
+		found=false;
+		for(j=GetFirstIdxKol(M);j<=GetLastIdxKol(M);j++){
+			if(M.el[i][j]==X && !found){
+				indeks=j;
+				found=true;
+			}
+		}
+		return indeks;
+	}
+	
+	int SearchKolom(Matriks M, int j, int X){
+		//Mencari X di kolom ke-j pada matriks M
+		//return indeks, jika tidak ada akan mengembalikan nilai 0
+		
+		//KAMUS LOKAL
+		int i,indeks;
+		boolean found;
+		//ALGORITMA
+		indeks=0;
+		found=false;
+		for(i=GetFirstIdxBrs(M);i<=GetLastIdxBrs(M);i++){
+			if(M.el[i][j]==X && !found){
+				indeks=i;
+				found=true;
+			}
+		}
+		return indeks;
+	}
+	
+	
+	void GabungMatriks(Matriks M1, Matriks M2){
+		//Prekondisi : Baris Matriks harus sama
+		//I.S : M1, M2 terdefinisi
+		//F.S : Membuat matriks augmented
+		
+		//KAMUS LOKAL
+		int i,j;
+		//ALGORITMA
+		this.NK=M1.NK+M2.NK;
+		for(i=GetFirstIdxBrs(M1);i<=GetLastIdxBrs(M1);i++){
+			for(j=GetFirstIdxKol(M2);j<=GetLastIdxKol(M2);j++){
+				this.el[i][j+GetLastIdxKol(M1)]=M2.el[i][j];
+			}
+		}
+	}
 }
