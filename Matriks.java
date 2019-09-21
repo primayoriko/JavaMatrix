@@ -229,17 +229,22 @@ public class Matriks{
 		}
 	}
 	
-	void CopyMATRIKS (Matriks MIn)
+	Matriks CopyMATRIKS (Matriks MIn)
 	// Melakukan assignment MHsl  MIn 
 	{	// KAMUS LOKAL
-		indeks i,j;
+		int i,j;
+		Matriks tmp;
 		// ALGORITMA
-		
+		tmp=new Matriks();
 		for(i=GetFirstIdxBrs(MIn);i<=GetLastIdxBrs(MIn);i++){
 			for(j=GetFirstIdxKol(MIn);j<=GetLastIdxKol(MIn);j++){
-				this.el[i][j]=MIn.el[i][j];
+				tmp.el[i][j]=MIn.el[i][j];
 			}
 		}
+		tmp.NB=MIn.NB;
+		tmp.NK=MIn.NK;
+		tmp.det=MIn.det;
+		return tmp;
 	}
 	
 	void TambahKBaris(int RAw, int RAkh, int K){
