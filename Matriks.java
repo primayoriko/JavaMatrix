@@ -278,5 +278,69 @@ public class Matriks{
 		}
 		this.NK-=1;
 	}
-
+	float Determinan(Matriks M){
+		//KAMUS LOKAL
+		int i,j;
+		float res;
+		//ALGORITMA
+		if(IsBujurSangkar(M)){
+			if(M.NB==1 && M.NK==1){
+				return M.el[1][1];
+			}else if(M.NB==2 && M.NK==2){
+				return M.el[1][1]*M.el[2][2]-M.el[1][2]*M.el[2][1];
+			}else{
+				res=0;
+				for(i=GetFirstIdxKol(M);i<=GetLastIdxKol(M);i++){
+					if(i%2==1){
+						res+=M.el[1][i]*Minor(M,1,i);
+					}else{
+						res-=M.el[1][i]*Minor(M,1,i);
+					}
+				}
+				return res;
+			}
+		}
+	}
+	
+	float Minor(Matriks M, int r, int c){
+		//KAMUS LOKAL
+		float res;
+		int i,j;
+		Matriks tmp;
+		//ALGORITMA
+		tmp=new Matriks();
+		tmp=CopyMATRIKS(M);
+		tmp.ShrinkCol(c);
+		tmp.ShrinkRow(r);
+		res=Determinan(tmp);
+		return res;
+	}
+	
+	Matriks Kofaktor(Matriks M){
+		//KAMUS LOKAL
+		int i,j;
+		Matriks tmp;
+		//ALGORITMA
+		tmp=new Matriks();
+		tmp=CopyMATRIKS(M);
+		for(i=1;i<=M.NB;i++){
+			for(j=1;j<=M.NK;j++){
+				if((i+j)%2==0){
+					tmp.el[i][j]=M.el[i][j]*Minor(M,i,j);
+				}else{
+					tmp.el[i][j]=-1*M.el[i][j]*Minor(M,i,j);
+				}
+			}
+		}
+		tmp.det=Determinan(tmp);
+		return tmp;
+	}
+	Matriks Adjoin(Matriks M){
+		//KAMUS LOKAL
+		Matriks tmp=new Matriks();
+		//ALGORITMA
+		tmp=Kofaktor(M);
+		tmp.Transpose();
+		return tmp;
+	}
 }
