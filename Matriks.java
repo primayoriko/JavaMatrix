@@ -253,7 +253,7 @@ public class Matriks{
 		//ALGORITMA
 		return (this.NB==this.NK);
 	}
-void ShrinkRow(int r){
+	void ShrinkRow(int r){
 		int i,j;
 		
 		if(r!=this.NB){
