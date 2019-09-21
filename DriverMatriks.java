@@ -13,6 +13,7 @@ public class DriverMatriks{
         System.out.println("5. Adjoin");
         System.out.println("6. Interpolasi Polinom");
         System.out.println("7. Keluar");
+        inputMainMenu();
     }
 
     public static void menu1(){
@@ -21,37 +22,14 @@ public class DriverMatriks{
         System.out.println("2. Metode eliminasi Gauss-Jordan");
         System.out.println("3. Metode matriks balikan");
         System.out.println("4. Kaidah Cramer");
-    }
-
-    public static void inputting(){
-        Scanner input = new Scanner(System.in);
-        System.out.print("Masukan input : ");
-        inputnum = input.nextInt();
-    }
-
-    public static void inputMenu1(){
-        inputting();
-        switch (inputnum){
-            case 1 :
-
-                break;
-            case 2:
-                break;
-            case 3:
-                break;
-            case 4:
-                break;
-            default:
-                System.out.println("Input salah, coba divalidasi kembali.");
-                inputMainMenu();
-                break;
-        }
+        inputMenu1();
     }
 
     public static void inputMainMenu(){
         inputting();
         switch (inputnum){
             case 1 :
+                menu1();
                 break;
             case 2:
                 break;
@@ -68,17 +46,40 @@ public class DriverMatriks{
                 break;
             default:
                 System.out.println("Input salah, coba divalidasi kembali.");
+                mainMenu();
+                break;
+        }
+    }
+
+    public static void inputMenu1(){
+        inputting();
+        switch (inputnum){
+            case 1 :
+                
+                break;
+            case 2:
+                break;
+            case 3:
+                break;
+            case 4:
+                break;
+            default:
+                System.out.println("Input salah, coba divalidasi kembali.");
                 inputMainMenu();
                 break;
         }
     }
 
+    public static void inputting(){
+        Scanner input = new Scanner(System.in);
+        System.out.print("Masukan input : ");
+        inputnum = input.nextInt();
+    }
+
     public static void main(String[] args){
-        //Driver myDriver = new Driver();
         loop = true;
         while(loop){
             mainMenu();
-            inputMainMenu();
         }
 
     }

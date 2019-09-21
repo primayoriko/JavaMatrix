@@ -1,4 +1,4 @@
-#include "test.h"
+#include "algomatrix.h"
 #include <math.h>
 #include <stdlib.h>
 #include <stdio.h>
@@ -288,22 +288,25 @@ MATRIKS Echelon(MATRIKS Me, boolean aug){
         q = j-1; Fnd = false;
         do {
             q++;
+            //printf("hell %d %d\n", q, j);
             if (Elmt(Me,q,i)!=0){
                 Fnd = true;
             }
-        } while (!Fnd && q<GetLastIdxKol(Me));
+        } while (!Fnd && q<GetLastIdxBrs(Me));
 
-        if(q!=j){
-            for(k = i; k<=GetLastIdxKol(Me); k++){
-                temp = Elmt(Me,q,k);
-                Elmt(Me,q,k) = Elmt(Me,j,k);
-                Elmt(Me,j,k) = temp;
+        //printf("-----\n");
+        if(Fnd){
+            if (q!=j){
+                for(k = i; k<=GetLastIdxKol(Me); k++){
+                    temp = Elmt(Me,q,k);
+                    Elmt(Me,q,k) = Elmt(Me,j,k);
+                    Elmt(Me,j,k) = temp;
+                }
             }
-        }
-
-    /**/if(Fnd){
             temp = Elmt(Me,j,i);
+            //printf(" %d %d %f\n",i,j, temp);
             for(k=i;k<=GetLastIdxKol(Me);k++){
+                //printf("%d %d %f %f\n", j, k, Elmt(Me,j,k), temp);
                 Elmt(Me,j,k) /= temp;
             }
 
@@ -315,6 +318,8 @@ MATRIKS Echelon(MATRIKS Me, boolean aug){
                     }
                 }
             } 
+            //TulisMATRIKS(Me);
+            //printf("\n");
             j++;
         }    
     }
@@ -349,14 +354,70 @@ MATRIKS EchelonReduc(MATRIKS Me, boolean aug){
     return Me;
 }
 
-void SPLSolver(Matriks M){
-    Eltype Sol[GetLastIdxKol(M)];
+void SPLSolver(MATRIKS M){
+    ElType kons, Sol[GetLastIdxKol(M)];
     const float ValUndef = -9999997;
-    int i,j,k;
-    for(i= GetFirstIdxKol(M);i<GetLastIdxKol(M);i++) Sol[i]= ValUndef;
+    int i, j, k, cnt, ndef, nSol[GetLastIdxKol(M)];;
+    boolean loop;
 
-    for(j= GetLastIdxBrs(M);j>=GetFirstIdxBrs(M); j--){
+    for(i= GetFirstIdxKol(M);i<GetLastIdxKol(M);i++){
+        Sol[i]= ValUndef;
+        nSol[i]= (int)ValUndef;
+    } 
 
+    loop = true; cnt = 0; 
+    for(i= GetLastIdxBrs(M); i>=GetFirstIdxBrs(M) && loop; i--){
+        ndef = 0;
+        kons = Elmt(M, i, GetLastIdxKol(M));
+        for(j= GetLastIdxKol(M)-1; j>=GetFirstIdxKol(M); j--){
+            if(Elmt(M,i,j) !=0){
+                if(Sol[j]!=ValUndef){
+                    kons -= Sol[j]*Elmt(M,i,j);
+                }
+                else { 
+                    if (ndef == 0) k = j;
+                    nSol[j] = i;
+                    ndef++;
+                }
+            }  
+        }
+        if(ndef==1){
+            Sol[k] = kons / Elmt(M, i, k);
+            cnt++;
+        }
+        else if(kons!=0 && ndef==0){
+            printf("Tidak Ada Solusi Valid\n");
+            loop=false;
+        }
+        Elmt(M, i, GetLastIdxKol(M)) = kons;
+    }
+    if (loop){
+        if(cnt==GetLastIdxKol(M)-1){
+            printf("Terdapat solusi unik\n");
+        }
+        else{
+            printf("Solusi ada Banyak\n");
+        }
+        for(j = GetFirstIdxKol(M); j<=GetLastIdxKol(M)-1; j++){
+            if(Sol[GetLastIdxKol(M)-j]!=ValUndef){
+                nSol[GetLastIdxKol(M)-j]= ValUndef;
+                printf("x%d = %.3f\n", GetLastIdxKol(M)-j, Sol[GetLastIdxKol(M)-j]);
+            }
+        }
+        for(j = GetFirstIdxKol(M); j<=GetLastIdxKol(M)-1; j++){
+            if(nSol[GetLastIdxKol(M)-j]!=ValUndef){
+                k = nSol[GetLastIdxKol(M)-j];
+                printf("%.3fx%d ", Elmt(M,k,j), GetLastIdxKol(M)-j);
+                nSol[GetLastIdxKol(M)-j]= ValUndef;
+                for(i = j; i<=GetLastIdxKol(M)-1; i++){
+                    if(nSol[GetLastIdxKol(M)-i] == k){
+                        printf("+ %.3fx%d ", Elmt(M,k,i), GetLastIdxKol(M)-i);
+                        nSol[GetLastIdxKol(M)-i]= ValUndef;
+                    }
+                }
+                printf(" = %.3f\n", Elmt(M, k, GetLastIdxKol(M)));
+            }
+        }
     }
 } 
 

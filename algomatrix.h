@@ -138,7 +138,7 @@ MATRIKS Echelon(MATRIKS Me, boolean aug);
 
 MATRIKS EchelonReduc(MATRIKS Me, boolean aug);
 
-void SPLSolver(Matriks M);
+void SPLSolver(MATRIKS M);
 
 void Interpolation(int Npers, int deg);
 
