@@ -27,7 +27,12 @@ public class Matriks{
 		//KAMUS LOKAL
 		Scanner in = new Scanner(System.in);
 		int i,j;
+		int m,n;
 		//ALGORITMA
+		m=in.nextInt();
+		n=in.nextInt();
+		this.NB=m;
+		this.NK=n;
 		for(i=1;i<=this.NB;i++){
 			for(j=1;j<=this.NK;j++){
 				this.el[i][j]=in.nextDouble();
