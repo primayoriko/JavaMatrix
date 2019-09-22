@@ -4,8 +4,8 @@ public class Matriks{
     //Atribut
 	int NB;
 	int NK;
-	double[][] el = new int[1000][1000];
-	double det;
+	float[][] el = new float[1000][1000];
+	float det;
 	
 	//METHOD:
 	//Konstruktor
@@ -35,7 +35,7 @@ public class Matriks{
 		this.NK=n;
 		for(i=1;i<=this.NB;i++){
 			for(j=1;j<=this.NK;j++){
-				this.el[i][j]=in.nextDouble();
+				this.el[i][j]=in.nextFloat();
 			}
 		}
 	}
@@ -58,7 +58,7 @@ public class Matriks{
 	void Transpose(){
 		//KAMUS LOKAL
 		int i,j,b,k;
-		double tmp;
+		float tmp;
 		//ALGORITMA
 		for(i=1;i<=this.NB;i++){
 			for(j=1;j<=this.NK;j++){
@@ -82,8 +82,6 @@ public class Matriks{
 				this.el[i][j]=K*this.el[i][j];
 			}
 		}
-		this.NB=M1.NB;
-		this.NK=M1.NK;
 	}
 	
 	void JumlahMATRIKS(Matriks M1, Matriks M2){
@@ -117,7 +115,7 @@ public class Matriks{
 		int i,j,k;
 		//ALGORITMA
 		for(i=1;i<=M1.NB;i++){
-			for(j=1;j<=M2.NK);j++){
+			for(j=1;j<=M2.NK;j++){
 				this.el[i][j]=0;
 				for(k=1;k<=M1.NK;k++){
 					this.el[i][j]+=M1.el[i][k]*M2.el[k][j];
@@ -151,10 +149,10 @@ public class Matriks{
 		}
 		return eq;
 	}
-	void SwapBaris(int S, int D){
+	void SwapBaris(int s, int d){
 		//KAMUS LOKAL
 		int j;
-		double tmp;
+		float tmp;
 		//ALGORITMA
 		for(j=1;j<=this.NK;j++){
 			tmp=this.el[s][j];
@@ -162,12 +160,12 @@ public class Matriks{
 			this.el[d][j]=tmp;
 		}
 	}
-	void SwapKolom(int S, int D){
+	void SwapKolom(int s, int d){
 		//KAMUS LOKAL
 		int i;
-		double tmp;
+		float tmp;
 		//ALGORITMA
-		for(i=1;i<=this.NB;j++){
+		for(i=1;i<=this.NB;i++){
 			tmp=this.el[i][s];
 			this.el[i][s]=this.el[i][d];
 			this.el[i][d]=tmp;
@@ -309,7 +307,9 @@ public class Matriks{
 				}
 				return res;
 			}
-		}
+        }else{
+        	return -99999;
+        }
 	}
 	
 	float Minor(Matriks M, int r, int c){
@@ -352,5 +352,24 @@ public class Matriks{
 		tmp=Kofaktor(M);
 		tmp.Transpose();
 		return tmp;
+	}
+	int GetFirstIdxKol(Matriks M){
+		//ALGORITMA
+		return 1;
+	}
+	  
+	int GetFirstIdxBrs(Matriks M){
+		//ALGORITMA
+		return 1;
+	}
+	  
+	int GetLastIdxKol(Matriks M){
+		//ALGORITMA
+		return M.NK;
+	}
+	  
+	int GetLastIdxBrs(Matriks M){
+		//ALGORITMA
+		return M.NB;
 	}
 }
