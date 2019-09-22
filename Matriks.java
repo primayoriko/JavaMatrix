@@ -4,23 +4,21 @@ public class Matriks{
     //Atribut
 	int NB;
 	int NK;
-	float[][] el = new float[1000][1000];
-	float det;
+	float[][] el = new float[1001][1001];
 	
 	//METHOD:
 	//Konstruktor
-	Matriks(){
+	Matriks(int nb, int nk){
 	//KAMUS LOKAL
 		int i,j;
 	//ALGORITMA
-		this.NB=0;
-		this.NK=0;
+		this.NB=nb;
+		this.NK=nk;
 		for(i=1;i<=1000;i++){
 			for(j=1;j<=1000;j++){
 				this.el[i][j]=0;
 			}
 		}
-		this.det=0;
 	}
 	//Input
 	void BacaMATRIKS(){
@@ -55,75 +53,80 @@ public class Matriks{
 		}
 	}
 	
-	void Transpose(){
+	Matriks Transpose(){
 		//KAMUS LOKAL
 		int i,j,b,k;
 		float tmp;
+		Matriks Mtmp;
 		//ALGORITMA
+		Mtmp=new Matriks(this.NB,this.NK);
 		for(i=1;i<=this.NB;i++){
 			for(j=1;j<=this.NK;j++){
-				tmp=this.el[i][j];
-				this.el[i][j]=this.el[j][i];
-				this.el[j][i]=tmp;
+				tmp=Mtmp.el[i][j];
+				Mtmp.el[i][j]=Mtmp.el[j][i];
+				Mtmp.el[j][i]=tmp;
 			}
 		}
-		b=this.NB;
-		k=this.NK;
-		this.NB=k;
-		this.NK=b;
+		return Mtmp;
 	}
 	
-	void KaliKons(int K){
+	Matriks KaliKons(int K){
 		//KAMUS LOKAL
 		int i,j;
+		Matriks tmp;
 		//ALGORITMA
+		tmp=new Matriks(this.NB,this.NK);
 		for(i=1;i<=this.NB;i++){
 			for(j=1;j<=this.NK;j++){
-				this.el[i][j]=K*this.el[i][j];
+				tmp.el[i][j]=K*this.el[i][j];
 			}
 		}
+		return tmp;
 	}
 	
-	void JumlahMATRIKS(Matriks M1, Matriks M2){
+	Matriks JumlahMATRIKS(Matriks M1, Matriks M2){
 		//KAMUS LOKAL
 		int i,j;
+		Matriks tmp;
 		//ALGORITMA
+		tmp=new Matriks(this.NB,this.NK);
 		for(i=1;i<=this.NB;i++){
 			for(j=1;j<=this.NK;j++){
-				this.el[i][j]=M1.el[i][j]+M2.el[i][j];
+				tmp.el[i][j]=M1.el[i][j]+M2.el[i][j];
 			}
 		}
-		this.NB=M1.NB;
-		this.NK=M1.NK;
+		return tmp;
 	}
 	
-	void KurangMATRIKS(Matriks M1, Matriks M2){
+	Matriks KurangMATRIKS(Matriks M1, Matriks M2){
 		//KAMUS LOKAL
 		int i,j;
+		Matriks tmp;
 		//ALGORITMA
+		tmp=new Matriks(this.NB,this.NK);
 		for(i=1;i<=this.NB;i++){
 			for(j=1;j<=this.NK;j++){
-				this.el[i][j]=M1.el[i][j]-M2.el[i][j];
+				tmp.el[i][j]=M1.el[i][j]-M2.el[i][j];
 			}
 		}
-		this.NB=M1.NB;
-		this.NK=M1.NK;
+		return tmp;
 	}
 	
-	void KaliMATRIKS(Matriks M1, Matriks M2){
+	Matriks KaliMATRIKS(Matriks M1, Matriks M2){
 		//KAMUS LOKAL
 		int i,j,k;
+		Matriks tmp;
 		//ALGORITMA
+		tmp=new Matriks(M1.NB,M2.NK);
 		for(i=1;i<=M1.NB;i++){
 			for(j=1;j<=M2.NK;j++){
-				this.el[i][j]=0;
+				tmp.el[i][j]=0;
 				for(k=1;k<=M1.NK;k++){
-					this.el[i][j]+=M1.el[i][k]*M2.el[k][j];
+					tmp.el[i][j]+=M1.el[i][k]*M2.el[k][j];
 				}
 			}
 		}
-		this.NB=M1.NB;
-		this.NK=M2.NK;
+		return tmp;
 	}
 	
 	boolean IsEQ(Matriks M1, Matriks M2){
@@ -182,7 +185,7 @@ public class Matriks{
 		//ALGORITMA
 		indeks=0;
 		found=false;
-		for(j=GetFirstIdxKol(M);j<=GetLastIdxKol(M);j++){
+		for(j=M.GetFirstIdxKol();j<=M.GetLastIdxKol();j++){
 			if(M.el[i][j]==X && !found){
 				indeks=j;
 				found=true;
@@ -201,7 +204,7 @@ public class Matriks{
 		//ALGORITMA
 		indeks=0;
 		found=false;
-		for(i=GetFirstIdxBrs(M);i<=GetLastIdxBrs(M);i++){
+		for(i=M.GetFirstIdxBrs();i<=M.GetLastIdxBrs();i++){
 			if(M.el[i][j]==X && !found){
 				indeks=i;
 				found=true;
@@ -220,9 +223,9 @@ public class Matriks{
 		int i,j;
 		//ALGORITMA
 		this.NK=M1.NK+M2.NK;
-		for(i=GetFirstIdxBrs(M1);i<=GetLastIdxBrs(M1);i++){
-			for(j=GetFirstIdxKol(M2);j<=GetLastIdxKol(M2);j++){
-				this.el[i][j+GetLastIdxKol(M1)]=M2.el[i][j];
+		for(i=M1.GetFirstIdxBrs();i<=M1.GetLastIdxBrs();i++){
+			for(j=M2.GetFirstIdxKol();j<=M2.GetLastIdxKol();j++){
+				this.el[i][j+M1.GetLastIdxKol()]=M2.el[i][j];
 			}
 		}
 	}
@@ -233,15 +236,12 @@ public class Matriks{
 		int i,j;
 		Matriks tmp;
 		// ALGORITMA
-		tmp=new Matriks();
-		for(i=GetFirstIdxBrs(MIn);i<=GetLastIdxBrs(MIn);i++){
-			for(j=GetFirstIdxKol(MIn);j<=GetLastIdxKol(MIn);j++){
+		tmp=new Matriks(MIn.NB,MIn.NK);
+		for(i=MIn.GetFirstIdxBrs();i<=MIn.GetLastIdxBrs();i++){
+			for(j=MIn.GetFirstIdxKol();j<=MIn.GetLastIdxKol();j++){
 				tmp.el[i][j]=MIn.el[i][j];
 			}
 		}
-		tmp.NB=MIn.NB;
-		tmp.NK=MIn.NK;
-		tmp.det=MIn.det;
 		return tmp;
 	}
 	
@@ -298,7 +298,7 @@ public class Matriks{
 				return M.el[1][1]*M.el[2][2]-M.el[1][2]*M.el[2][1];
 			}else{
 				res=0;
-				for(i=GetFirstIdxKol(M);i<=GetLastIdxKol(M);i++){
+				for(i=M.GetFirstIdxKol();i<=M.GetLastIdxKol();i++){
 					if(i%2==1){
 						res+=M.el[1][i]*Minor(M,1,i);
 					}else{
@@ -318,7 +318,7 @@ public class Matriks{
 		int i,j;
 		Matriks tmp;
 		//ALGORITMA
-		tmp=new Matriks();
+		tmp=new Matriks(M.NB,M.NK);
 		tmp=CopyMATRIKS(M);
 		tmp.ShrinkCol(c);
 		tmp.ShrinkRow(r);
@@ -331,7 +331,7 @@ public class Matriks{
 		int i,j;
 		Matriks tmp;
 		//ALGORITMA
-		tmp=new Matriks();
+		tmp=new Matriks(M.NB,M.NK);
 		tmp=CopyMATRIKS(M);
 		for(i=1;i<=M.NB;i++){
 			for(j=1;j<=M.NK;j++){
@@ -342,34 +342,33 @@ public class Matriks{
 				}
 			}
 		}
-		tmp.det=Determinan(tmp);
 		return tmp;
 	}
 	Matriks Adjoin(Matriks M){
 		//KAMUS LOKAL
-		Matriks tmp=new Matriks();
+		Matriks tmp=new Matriks(M.NB,M.NK);
 		//ALGORITMA
 		tmp=Kofaktor(M);
-		tmp.Transpose();
+		tmp=tmp.Transpose();
 		return tmp;
 	}
-	int GetFirstIdxKol(Matriks M){
+	int GetFirstIdxKol(){
 		//ALGORITMA
 		return 1;
 	}
 	  
-	int GetFirstIdxBrs(Matriks M){
+	int GetFirstIdxBrs(){
 		//ALGORITMA
 		return 1;
 	}
 	  
-	int GetLastIdxKol(Matriks M){
+	int GetLastIdxKol(){
 		//ALGORITMA
-		return M.NK;
+		return this.NK;
 	}
 	  
-	int GetLastIdxBrs(Matriks M){
+	int GetLastIdxBrs(){
 		//ALGORITMA
-		return M.NB;
+		return this.NB;
 	}
 }
