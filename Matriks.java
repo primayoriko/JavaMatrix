@@ -21,7 +21,7 @@ public class Matriks{
 		}
 	}
 	//Input
-	void BacaMATRIKS(){
+	public void BacaMATRIKS(){
 		//KAMUS LOKAL
 		Scanner in = new Scanner(System.in);
 		int i,j;
@@ -38,7 +38,7 @@ public class Matriks{
 		}
 	}
 	//Output
-	void TulisMATRIKS(){
+	public void TulisMATRIKS(){
 		//KAMUS LOKAL
 		int i,j;
 		//ALGORITMA
@@ -53,7 +53,7 @@ public class Matriks{
 		}
 	}
 	
-	Matriks Transpose(){
+	public Matriks Transpose(){
 		//KAMUS LOKAL
 		int i,j,b,k;
 		float tmp;
@@ -70,7 +70,7 @@ public class Matriks{
 		return Mtmp;
 	}
 	
-	Matriks KaliKons(int K){
+	public Matriks KaliKons(int K){
 		//KAMUS LOKAL
 		int i,j;
 		Matriks tmp;
@@ -84,7 +84,7 @@ public class Matriks{
 		return tmp;
 	}
 	
-	Matriks JumlahMATRIKS(Matriks M1, Matriks M2){
+	public Matriks JumlahMATRIKS(Matriks M1, Matriks M2){
 		//KAMUS LOKAL
 		int i,j;
 		Matriks tmp;
@@ -98,7 +98,7 @@ public class Matriks{
 		return tmp;
 	}
 	
-	Matriks KurangMATRIKS(Matriks M1, Matriks M2){
+	public Matriks KurangMATRIKS(Matriks M1, Matriks M2){
 		//KAMUS LOKAL
 		int i,j;
 		Matriks tmp;
@@ -112,7 +112,7 @@ public class Matriks{
 		return tmp;
 	}
 	
-	Matriks KaliMATRIKS(Matriks M1, Matriks M2){
+	public Matriks KaliMATRIKS(Matriks M1, Matriks M2){
 		//KAMUS LOKAL
 		int i,j,k;
 		Matriks tmp;
@@ -129,7 +129,7 @@ public class Matriks{
 		return tmp;
 	}
 	
-	boolean IsEQ(Matriks M1, Matriks M2){
+	public boolean IsEQ(Matriks M1, Matriks M2){
 		//KAMUS LOKAL
 		int i,j;
 		boolean eq;
@@ -152,7 +152,7 @@ public class Matriks{
 		}
 		return eq;
 	}
-	void SwapBaris(int s, int d){
+	public void SwapBaris(int s, int d){
 		//KAMUS LOKAL
 		int j;
 		float tmp;
@@ -163,7 +163,7 @@ public class Matriks{
 			this.el[d][j]=tmp;
 		}
 	}
-	void SwapKolom(int s, int d){
+	public void SwapKolom(int s, int d){
 		//KAMUS LOKAL
 		int i;
 		float tmp;
@@ -175,7 +175,7 @@ public class Matriks{
 		}
 	}
 	
-	int SearchBaris(Matriks M, int i, int X){
+	public int SearchBaris(Matriks M, int i, int X){
 		//Mencari X di baris ke-i pada matriks M
 		//return indeks, jika tidak ada akan mengembalikan nilai 0
 		
@@ -194,7 +194,7 @@ public class Matriks{
 		return indeks;
 	}
 	
-	int SearchKolom(Matriks M, int j, int X){
+	public int SearchKolom(Matriks M, int j, int X){
 		//Mencari X di kolom ke-j pada matriks M
 		//return indeks, jika tidak ada akan mengembalikan nilai 0
 		
@@ -214,7 +214,7 @@ public class Matriks{
 	}
 	
 	
-	void GabungMatriks(Matriks M1, Matriks M2){
+	public void GabungMatriks(Matriks M1, Matriks M2){
 		//Prekondisi : Baris Matriks harus sama
 		//I.S : M1, M2 terdefinisi
 		//F.S : Membuat matriks augmented
@@ -230,7 +230,7 @@ public class Matriks{
 		}
 	}
 	
-	Matriks CopyMATRIKS (Matriks MIn)
+	public Matriks CopyMATRIKS (Matriks MIn)
 	// Melakukan assignment MHsl  MIn 
 	{	// KAMUS LOKAL
 		int i,j;
@@ -245,7 +245,7 @@ public class Matriks{
 		return tmp;
 	}
 	
-	void TambahKBaris(int RAw, int RAkh, int K){
+	public void TambahKBaris(int RAw, int RAkh, int K){
 		//I.S : Matriks terdefinisi
 		//F.S : Menambahkan RAw dengan K kali RAkh
 		
@@ -257,11 +257,11 @@ public class Matriks{
 		}
 	}
 	
-	boolean IsBujurSangkar(Matriks M){
+	public boolean IsBujurSangkar(Matriks M){
 		//ALGORITMA
 		return (this.NB==this.NK);
 	}
-	void ShrinkRow(int r){
+	public void ShrinkRow(int r){
 		int i,j;
 		
 		if(r!=this.NB){
@@ -274,7 +274,7 @@ public class Matriks{
 		this.NB-=1;
 	}
 	
-	void ShrinkCol(int c){
+	public void ShrinkCol(int c){
 		int i,j;
 		
 		if(c!=this.NK){
@@ -286,7 +286,7 @@ public class Matriks{
 		}
 		this.NK-=1;
 	}
-	float Determinan(Matriks M){
+	public float Determinan(Matriks M){
 		//KAMUS LOKAL
 		int i,j;
 		float res;
@@ -312,7 +312,7 @@ public class Matriks{
         }
 	}
 	
-	float Minor(Matriks M, int r, int c){
+	public float Minor(Matriks M, int r, int c){
 		//KAMUS LOKAL
 		float res;
 		int i,j;
@@ -326,7 +326,7 @@ public class Matriks{
 		return res;
 	}
 	
-	Matriks Kofaktor(Matriks M){
+	public Matriks Kofaktor(Matriks M){
 		//KAMUS LOKAL
 		int i,j;
 		Matriks tmp;
@@ -344,7 +344,7 @@ public class Matriks{
 		}
 		return tmp;
 	}
-	Matriks Adjoin(Matriks M){
+	public Matriks Adjoin(Matriks M){
 		//KAMUS LOKAL
 		Matriks tmp=new Matriks(M.NB,M.NK);
 		//ALGORITMA
@@ -352,22 +352,22 @@ public class Matriks{
 		tmp=tmp.Transpose();
 		return tmp;
 	}
-	int GetFirstIdxKol(){
+	public int GetFirstIdxKol(){
 		//ALGORITMA
 		return 1;
 	}
 	  
-	int GetFirstIdxBrs(){
+	public int GetFirstIdxBrs(){
 		//ALGORITMA
 		return 1;
 	}
 	  
-	int GetLastIdxKol(){
+	public int GetLastIdxKol(){
 		//ALGORITMA
 		return this.NK;
 	}
 	  
-	int GetLastIdxBrs(){
+	public int GetLastIdxBrs(){
 		//ALGORITMA
 		return this.NB;
 	}
