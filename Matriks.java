@@ -129,18 +129,18 @@ public class Matriks{
 		return tmp;
 	}
 	
-	public boolean IsEQ(Matriks M1, Matriks M2){
+	public boolean IsEQ(Matriks M2){
 		//KAMUS LOKAL
 		int i,j;
 		boolean eq;
 		//ALGORITMA
-		if(M1.NB==M2.NB && M1.NK==M2.NK){
+		if(this.NB==M2.NB && this.NK==M2.NK){
 			eq=true;
 			i=1;
-			while(i<=M1.NB && eq){
+			while(i<=this.NB && eq){
 				j=1;
-				while(j<=M1.NK && eq){
-					if(M1.el[i][j]!=M2.el[i][j]){
+				while(j<=this.NK && eq){
+					if(this.el[i][j]!=M2.el[i][j]){
 						eq=false;
 					}
 					j++;
