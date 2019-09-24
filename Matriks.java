@@ -84,7 +84,7 @@ public class Matriks{
 		return tmp;
 	}
 	
-	public Matriks JumlahMATRIKS(Matriks M1, Matriks M2){
+	public Matriks JumlahMATRIKS(Matriks M2){
 		//KAMUS LOKAL
 		int i,j;
 		Matriks tmp;
@@ -92,13 +92,13 @@ public class Matriks{
 		tmp=new Matriks(this.NB,this.NK);
 		for(i=1;i<=this.NB;i++){
 			for(j=1;j<=this.NK;j++){
-				tmp.el[i][j]=M1.el[i][j]+M2.el[i][j];
+				tmp.el[i][j]=this.el[i][j]+M2.el[i][j];
 			}
 		}
 		return tmp;
 	}
 	
-	public Matriks KurangMATRIKS(Matriks M1, Matriks M2){
+	public Matriks KurangMATRIKS(Matriks M2){
 		//KAMUS LOKAL
 		int i,j;
 		Matriks tmp;
@@ -106,7 +106,7 @@ public class Matriks{
 		tmp=new Matriks(this.NB,this.NK);
 		for(i=1;i<=this.NB;i++){
 			for(j=1;j<=this.NK;j++){
-				tmp.el[i][j]=M1.el[i][j]-M2.el[i][j];
+				tmp.el[i][j]=this.el[i][j]-M2.el[i][j];
 			}
 		}
 		return tmp;
@@ -175,7 +175,7 @@ public class Matriks{
 		}
 	}
 	
-	public int SearchBaris(Matriks M, int i, int X){
+	public int SearchBaris(int i, int X){
 		//Mencari X di baris ke-i pada matriks M
 		//return indeks, jika tidak ada akan mengembalikan nilai 0
 		
@@ -185,8 +185,8 @@ public class Matriks{
 		//ALGORITMA
 		indeks=0;
 		found=false;
-		for(j=M.GetFirstIdxKol();j<=M.GetLastIdxKol();j++){
-			if(M.el[i][j]==X && !found){
+		for(j=this.GetFirstIdxKol();j<=this.GetLastIdxKol();j++){
+			if(this.el[i][j]==X && !found){
 				indeks=j;
 				found=true;
 			}
@@ -194,7 +194,7 @@ public class Matriks{
 		return indeks;
 	}
 	
-	public int SearchKolom(Matriks M, int j, int X){
+	public int SearchKolom(int j, int X){
 		//Mencari X di kolom ke-j pada matriks M
 		//return indeks, jika tidak ada akan mengembalikan nilai 0
 		
@@ -204,8 +204,8 @@ public class Matriks{
 		//ALGORITMA
 		indeks=0;
 		found=false;
-		for(i=M.GetFirstIdxBrs();i<=M.GetLastIdxBrs();i++){
-			if(M.el[i][j]==X && !found){
+		for(i=this.GetFirstIdxBrs();i<=this.GetLastIdxBrs();i++){
+			if(this.el[i][j]==X && !found){
 				indeks=i;
 				found=true;
 			}
@@ -214,7 +214,7 @@ public class Matriks{
 	}
 	
 	
-	public void GabungMatriks(Matriks M1, Matriks M2){
+	public void GabungMatriks(Matriks M2){
 		//Prekondisi : Baris Matriks harus sama
 		//I.S : M1, M2 terdefinisi
 		//F.S : Membuat matriks augmented
@@ -222,10 +222,10 @@ public class Matriks{
 		//KAMUS LOKAL
 		int i,j;
 		//ALGORITMA
-		this.NK=M1.NK+M2.NK;
-		for(i=M1.GetFirstIdxBrs();i<=M1.GetLastIdxBrs();i++){
+		this.NK=this.NK+M2.NK;
+		for(i=this.GetFirstIdxBrs();i<=this.GetLastIdxBrs();i++){
 			for(j=M2.GetFirstIdxKol();j<=M2.GetLastIdxKol();j++){
-				this.el[i][j+M1.GetLastIdxKol()]=M2.el[i][j];
+				this.el[i][j+this.GetLastIdxKol()]=M2.el[i][j];
 			}
 		}
 	}
