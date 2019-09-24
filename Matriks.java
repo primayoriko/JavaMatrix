@@ -371,7 +371,7 @@ public class Matriks{
 		//ALGORITMA
 		return this.NB;
 	}
-	public IsEQSize(Matriks M){
+	public boolean IsEQSize(Matriks M){
 		//KAMUS LOKAL
 
 		//ALGORITMA
