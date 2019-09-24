@@ -400,4 +400,31 @@ public class Matriks{
 		}
 		return Mtemp;
 	}
+	public void inputFile(String s){
+		//KAMUS LOKAL
+		int i,j,r,c,col;
+		String line;
+		//ALGORITMA
+		try (FileReader reader = new FileReader(s);
+		     BufferedReader br = new BufferedReader(reader)) {
+
+		    r=1;
+		    col=0;
+		    while ((line = br.readLine()) != null) {
+			Scanner scanner = new Scanner(line);
+			c=1;
+			while(scanner.hasNext()){
+				this.[r][c]=scanner.nextFloat();
+				c++;
+			}
+			col=c-1;
+			r++;
+		    }
+		    r--;
+		    this.NB=r;
+		    this.NK=col;
+		} catch (IOException e) {
+		    System.err.format("IOException: %s%n", e);
+		}
+	}
 }
