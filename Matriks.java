@@ -83,7 +83,12 @@ public class Matriks{
 		}
 		return tmp;
 	}
-	
+	public boolean IsEmpty(){
+		//KAMUS LOKAL
+
+		//ALGORITMA
+		return (this.NB==0 && this.NK==0);
+	}
 	public Matriks JumlahMATRIKS(Matriks M2){
 		//KAMUS LOKAL
 		int i,j;
