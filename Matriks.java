@@ -53,6 +53,26 @@ public class Matriks{
 		}
 	}
 	
+	public int GetFirstIdxKol(){
+		//ALGORITMA
+		return 1;
+	}
+	  
+	public int GetFirstIdxBrs(){
+		//ALGORITMA
+		return 1;
+	}
+	  
+	public int GetLastIdxKol(){
+		//ALGORITMA
+		return this.NK;
+	}
+	  
+	public int GetLastIdxBrs(){
+		//ALGORITMA
+		return this.NB;
+	}
+	
 	public Matriks Transpose(){
 		//KAMUS LOKAL
 		int i,j,b,k;
@@ -129,6 +149,11 @@ public class Matriks{
 		return tmp;
 	}
 	
+	public boolean IsBujurSangkar(Matriks M){
+		//ALGORITMA
+		return (this.NB==this.NK);
+	}
+	
 	public boolean IsEQ(Matriks M1, Matriks M2){
 		//KAMUS LOKAL
 		int i,j;
@@ -152,6 +177,7 @@ public class Matriks{
 		}
 		return eq;
 	}
+	
 	public void SwapBaris(int s, int d){
 		//KAMUS LOKAL
 		int j;
@@ -230,19 +256,19 @@ public class Matriks{
 		}
 	}
 	
-	public Matriks CopyMATRIKS (Matriks MIn)
-	// Melakukan assignment MHsl  MIn 
+	public void CopyMATRIKS (Matriks MIn)
+	// Melakukan assignment Matriks ini dengan MIn 
 	{	// KAMUS LOKAL
 		int i,j;
-		Matriks tmp;
 		// ALGORITMA
-		tmp=new Matriks(MIn.NB,MIn.NK);
-		for(i=MIn.GetFirstIdxBrs();i<=MIn.GetLastIdxBrs();i++){
-			for(j=MIn.GetFirstIdxKol();j<=MIn.GetLastIdxKol();j++){
-				tmp.el[i][j]=MIn.el[i][j];
+		tmp=new Matriks();
+		for(i=GetFirstIdxBrs(MIn);i<=GetLastIdxBrs(MIn);i++){
+			for(j=GetFirstIdxKol(MIn);j<=GetLastIdxKol(MIn);j++){
+				this.el[i][j]=MIn.el[i][j];
 			}
 		}
-		return tmp;
+		this.NB=MIn.NB;
+		this.NK=MIn.NK;
 	}
 	
 	public void TambahKBaris(int RAw, int RAkh, int K){
@@ -257,10 +283,6 @@ public class Matriks{
 		}
 	}
 	
-	public boolean IsBujurSangkar(Matriks M){
-		//ALGORITMA
-		return (this.NB==this.NK);
-	}
 	public void ShrinkRow(int r){
 		int i,j;
 		
@@ -286,6 +308,21 @@ public class Matriks{
 		}
 		this.NK-=1;
 	}
+	
+	public float Minor(Matriks M, int r, int c){
+		//KAMUS LOKAL
+		float res;
+		int i,j;
+		Matriks tmp;
+		//ALGORITMA
+		tmp=new Matriks(M.NB,M.NK);
+		tmp=CopyMATRIKS(M);
+		tmp.ShrinkCol(c);
+		tmp.ShrinkRow(r);
+		res=Determinan(tmp);
+		return res;
+	}
+	
 	public float Determinan(Matriks M){
 		//KAMUS LOKAL
 		int i,j;
@@ -312,63 +349,4 @@ public class Matriks{
         }
 	}
 	
-	public float Minor(Matriks M, int r, int c){
-		//KAMUS LOKAL
-		float res;
-		int i,j;
-		Matriks tmp;
-		//ALGORITMA
-		tmp=new Matriks(M.NB,M.NK);
-		tmp=CopyMATRIKS(M);
-		tmp.ShrinkCol(c);
-		tmp.ShrinkRow(r);
-		res=Determinan(tmp);
-		return res;
-	}
-	
-	public Matriks Kofaktor(Matriks M){
-		//KAMUS LOKAL
-		int i,j;
-		Matriks tmp;
-		//ALGORITMA
-		tmp=new Matriks(M.NB,M.NK);
-		tmp=CopyMATRIKS(M);
-		for(i=1;i<=M.NB;i++){
-			for(j=1;j<=M.NK;j++){
-				if((i+j)%2==0){
-					tmp.el[i][j]=M.el[i][j]*Minor(M,i,j);
-				}else{
-					tmp.el[i][j]=-1*M.el[i][j]*Minor(M,i,j);
-				}
-			}
-		}
-		return tmp;
-	}
-	public Matriks Adjoin(Matriks M){
-		//KAMUS LOKAL
-		Matriks tmp=new Matriks(M.NB,M.NK);
-		//ALGORITMA
-		tmp=Kofaktor(M);
-		tmp=tmp.Transpose();
-		return tmp;
-	}
-	public int GetFirstIdxKol(){
-		//ALGORITMA
-		return 1;
-	}
-	  
-	public int GetFirstIdxBrs(){
-		//ALGORITMA
-		return 1;
-	}
-	  
-	public int GetLastIdxKol(){
-		//ALGORITMA
-		return this.NK;
-	}
-	  
-	public int GetLastIdxBrs(){
-		//ALGORITMA
-		return this.NB;
-	}
 }
