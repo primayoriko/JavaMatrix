@@ -427,4 +427,32 @@ public class Matriks{
 		    System.err.format("IOException: %s%n", e);
 		}
 	}
+	public void writeFile(){
+	//KAMUS LOKAL
+		int i,j;
+		StringBuffer strBuff;
+		String s;
+	//ALGORITMA
+		strBuff=new StringBuffer();
+
+		try (FileWriter writer = new FileWriter("output.txt");
+		     BufferedWriter bw = new BufferedWriter(writer)) {
+			for(i=this.GetFirstIdxBrs();i<=this.GetLastIdxBrs();i++){
+				for(j=this.GetFirstIdxKol();j<=this.GetLastIdxKol();j++){
+					strBuff.append(this.el[i][j]);
+					if(j!=this.GetLastIdxKol()){
+						strBuff.append(" ");
+					}
+				}
+				s=strBuff.toString();
+				bw.write(s);
+				if(i!=this.GetLastIdxBrs()){
+					bw.write(System.lineSeparator());
+				}
+			}
+
+		} catch (IOException e) {
+		    System.err.format("IOException: %s%n", e);
+		}
+	}
 }
