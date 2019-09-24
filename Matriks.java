@@ -349,4 +349,25 @@ public class Matriks{
         }
 	}
 	
+	
+	public MatriksInverse MatriksToInverse(){
+		MatriksInverse Mtemp = new MatriksInverse(this.NB, this.NK);
+		for(i=this.GetFirstIdxBrs();i<=this.GetLastIdxBrs();i++){
+			for(j=this.GetFirstIdxKol();j<=this.GetLastIdxKol();j++){
+				Mtemp.el[i][j]=this.el[i][j];
+			}
+		}
+		return Mtemp;
+	}
+
+	public MatriksGauss MatriksToGauss(){
+		MatriksGauss Mtemp = new MatriksGauss(this.NB, this.NK);
+		for(i=this.GetFirstIdxBrs();i<=this.GetLastIdxBrs();i++){
+			for(j=this.GetFirstIdxKol();j<=this.GetLastIdxKol();j++){
+				Mtemp.el[i][j]=this.el[i][j];
+			}
+		}
+		return Mtemp;
+	}
+	
 }
