@@ -3,19 +3,11 @@ import java.lang.Math;
 
 public class MatriksGauss extends Matriks{
     MatriksGauss(int NB, int NK){
-        //KAMUS LOKAL
-		int i,j;
-	    //ALGORITMA
-		this.NB=NB;
-		this.NK=NK;
-		for(i=1;i<=1000;i++){
-			for(j=1;j<=1000;j++){
-				this.el[i][j]=0;
-			}
-		}
+        super(NB,NK);
     }
 
     public Matriks GaussToMatriks(){
+        int i,j;
 		Matriks Mtemp = new Matriks(this.NB, this.NK);
 		for(i=this.GetFirstIdxBrs();i<=this.GetLastIdxBrs();i++){
 			for(j=this.GetFirstIdxKol();j<=this.GetLastIdxKol();j++){
@@ -25,15 +17,15 @@ public class MatriksGauss extends Matriks{
 		return Mtemp;
 	}
 
-    Public MatriksGauss Echelon(boolean augmented){
+    public MatriksGauss Echelon(boolean augmented){
         float temp, mult;
         int i,j,k, augLim, p,q;
         boolean Fnd;
         MatriksGauss Mtemp = new MatriksGauss(0,0);
-        Mtemp.CopyMatriks(this);
+        Mtemp = this.CopyMATRIKS().MatriksToGauss();
         augLim = (augmented)? Mtemp.GetLastIdxKol() - 1 : Mtemp.GetLastIdxKol();
-        j=Mtemp.GetFirstIdxBrs();
-        for(i=Mtemp.GetFirstIdxKol();i<=augLim && j<= Mtemp.GetLastIdxBrs();i++){
+        j= Mtemp.GetFirstIdxBrs();
+        for(i=Mtemp.GetFirstIdxKol(); i<=augLim && j<= Mtemp.GetLastIdxBrs(); i++){
             q = j-1; Fnd = false;
             do {
                 q++;
@@ -70,15 +62,15 @@ public class MatriksGauss extends Matriks{
     }
 
 
-    Public MatriksGauss EchelonReduc(boolean augmented){
+    public MatriksGauss EchelonReduc(boolean augmented){
         float temp, mult;
         int i,j,k, augLim, c,r;
         boolean Fnd;
         MatriksGauss Mtemp = new MatriksGauss(0,0);
-        Mtemp.CopyMatriks(this);
-        augLim = (augmented)? GetLastIdxKol(Me) - 1 : GetLastIdxKol(Me);
+        Mtemp = this.CopyMATRIKS().MatriksToGauss();
+        augLim = (augmented)? Mtemp.GetLastIdxKol() - 1 : Mtemp.GetLastIdxKol();
         for(i= augLim;i>=Mtemp.GetFirstIdxKol();i--){
-            Fnd = false;
+            Fnd = false; r=-1;
             for(j= Mtemp.GetLastIdxBrs(); j>= Mtemp.GetFirstIdxBrs(); j--){
                 if(Mtemp.el[j][i]!=0){
                     if (!Fnd){
@@ -96,6 +88,51 @@ public class MatriksGauss extends Matriks{
         }   
         return Mtemp;
     }
+
+    public void Solver(){
+        int i,j, cnt,fIdx;
+        int[] nNull = new int[this.GetLastIdxBrs()+1]; 
+        boolean loop = true;
+        for(i=this.GetLastIdxBrs(); i>=this.GetFirstIdxBrs() && loop; i--){
+            cnt=0;
+            fIdx=-1;
+            for(j=this.GetLastIdxKol() - 1; j>=this.GetFirstIdxKol(); j--){
+                if(this.el[i][j]!=0){
+                    if(cnt==0)fIdx = j;
+                    cnt++;                
+                }
+            }
+            nNull[i]=cnt;
+            if(cnt==0 && this.el[i][this.GetLastIdxKol()]!=0){
+                System.out.printf("Tidak Ada Solusi Valid%n");
+                loop = false;
+            }
+            else if(cnt==1){
+                for(j=i-1; j>=this.GetFirstIdxBrs(); j--){
+                    this.el[j][this.GetLastIdxKol()]-=this.el[j][fIdx] * this.el[i][this.GetLastIdxKol()];
+                    this.el[j][fIdx] = 0;
+                }
+            }
+        }
+        if (loop){
+            System.out.println("Solusi SPL :");
+            for(i=this.GetFirstIdxBrs(); i<=this.GetLastIdxBrs(); i++){
+                cnt = 0;
+                for(j=this.GetFirstIdxKol(); j<=this.GetLastIdxKol()-1; j++){
+                    if(this.el[i][j]!=0){
+                        if(cnt!=0) System.out.printf("+ ");
+                        if (this.el[i][j]!=1) System.out.printf("%.2f", this.el[i][j]); 
+                        System.out.printf("X%d ", this.GetLastIdxKol()-j);
+                        cnt++;
+                    } 
+                    
+                }
+                if (nNull[i]>0) System.out.printf("= %.3f", this.el[i][this.GetLastIdxKol()]);
+                System.out.printf("%n");
+            }
+        }
+    }
+}
 
     
 
