@@ -331,32 +331,6 @@ public class Matriks{
 		return res;
 	}
 	
-	public Matriks Kofaktor(){
-		//KAMUS LOKAL
-		int i,j;
-		Matriks tmp;
-		//ALGORITMA
-		tmp=new Matriks(this.NB,this.NK);
-		tmp=this.CopyMATRIKS();
-		for(i=1;i<=this.NB;i++){
-			for(j=1;j<=this.NK;j++){
-				if((i+j)%2==0){
-					tmp.el[i][j]=this.el[i][j]*this.Minor(i,j);
-				}else{
-					tmp.el[i][j]=-1*this.el[i][j]*this.Minor(i,j);
-				}
-			}
-		}
-		return tmp;
-	}
-	public Matriks Adjoin(){
-		//KAMUS LOKAL
-		Matriks tmp=new Matriks(this.NB,this.NK);
-		//ALGORITMA
-		tmp=this.Kofaktor();
-		tmp=tmp.Transpose();
-		return tmp;
-	}
 	public int GetFirstIdxKol(){
 		//ALGORITMA
 		return 1;
