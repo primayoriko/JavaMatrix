@@ -370,6 +370,9 @@ public class Matriks{
 	}
 	
 	public MatriksInverse MatriksToInverse(){
+		//KAMUS LOKAL
+		int i,j;
+		//ALGORITMA
 		MatriksInverse Mtemp = new MatriksInverse(this.NB, this.NK);
 		for(i=this.GetFirstIdxBrs();i<=this.GetLastIdxBrs();i++){
 			for(j=this.GetFirstIdxKol();j<=this.GetLastIdxKol();j++){
@@ -380,6 +383,9 @@ public class Matriks{
 	}
 
 	public MatriksGauss MatriksToGauss(){
+		//KAMUS LOKAL
+		int i,j;
+		//ALGORITMA
 		MatriksGauss Mtemp = new MatriksGauss(this.NB, this.NK);
 		for(i=this.GetFirstIdxBrs();i<=this.GetLastIdxBrs();i++){
 			for(j=this.GetFirstIdxKol();j<=this.GetLastIdxKol();j++){
