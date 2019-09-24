@@ -60,6 +60,7 @@ public class Matriks{
 		Matriks Mtmp;
 		//ALGORITMA
 		Mtmp=new Matriks(this.NB,this.NK);
+		Mtmp=this.CopyMATRIKS();
 		for(i=1;i<=this.NB;i++){
 			for(j=1;j<=this.NK;j++){
 				tmp=Mtmp.el[i][j];
@@ -88,6 +89,11 @@ public class Matriks{
 
 		//ALGORITMA
 		return (this.NB==0 && this.NK==0);
+	}
+	
+	public void ResizeMATRIKS(int NB,int NK){
+		this.NK=NK;
+		this.NB=NB;
 	}
 	public Matriks JumlahMATRIKS(Matriks M2){
 		//KAMUS LOKAL
