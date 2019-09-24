@@ -414,7 +414,7 @@ public class Matriks{
 			Scanner scanner = new Scanner(line);
 			c=1;
 			while(scanner.hasNext()){
-				this.[r][c]=scanner.nextFloat();
+				this.el[r][c]=scanner.nextFloat();
 				c++;
 			}
 			col=c-1;
