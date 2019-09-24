@@ -112,17 +112,17 @@ public class Matriks{
 		return tmp;
 	}
 	
-	public Matriks KaliMATRIKS(Matriks M1, Matriks M2){
+	public Matriks KaliMATRIKS(Matriks M2){
 		//KAMUS LOKAL
 		int i,j,k;
 		Matriks tmp;
 		//ALGORITMA
-		tmp=new Matriks(M1.NB,M2.NK);
-		for(i=1;i<=M1.NB;i++){
+		tmp=new Matriks(this.NB,M2.NK);
+		for(i=1;i<=this.NB;i++){
 			for(j=1;j<=M2.NK;j++){
 				tmp.el[i][j]=0;
-				for(k=1;k<=M1.NK;k++){
-					tmp.el[i][j]+=M1.el[i][k]*M2.el[k][j];
+				for(k=1;k<=this.NK;k++){
+					tmp.el[i][j]+=this.el[i][k]*M2.el[k][j];
 				}
 			}
 		}
