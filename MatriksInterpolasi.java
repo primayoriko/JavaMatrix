@@ -1,6 +1,6 @@
 import java.util.Scanner;
 import java.lang.Math;
-import java.math.BigDecimal;
+import java.math.*;
 
 public class MatriksInterpolasi extends Matriks{
     MatriksInterpolasi(int NB, int NK){
@@ -23,7 +23,7 @@ public class MatriksInterpolasi extends Matriks{
         MatriksInterpolasi MI = new MatriksInterpolasi(this.GetLastIdxBrs(), this.GetLastIdxBrs()+1);
         for(i=MI.GetFirstIdxBrs(); i<=MI.GetLastIdxBrs(); i++){
             for(j=MI.GetFirstIdxKol(); j<=MI.GetLastIdxKol() - 1; j++){
-                MI.el[i][j] = ((BigDecimal)Math.pow(this.el[i][1], MI.GetLastIdxKol()-j-1));
+                MI.el[i][j] = this.el[i][1].pow(MI.GetLastIdxKol()-j-1);
             }
             MI.el[i][MI.GetLastIdxKol()]=this.el[i][2];
         }
@@ -68,7 +68,7 @@ public class MatriksInterpolasi extends Matriks{
                         if(this.el[i][j].compareTo(BigDecimal.ZERO)!=0){
                             if(cnt!=0 && this.el[i][this.GetLastIdxKol()].compareTo(BigDecimal.ZERO)>0) System.out.printf(" + ");
                             if(this.el[i][this.GetLastIdxKol()].compareTo(BigDecimal.ZERO)<0) System.out.printf(" - ");
-                            System.out.printf("%.2f", Math.abs(this.el[i][this.GetLastIdxKol()]));
+                            System.out.printf("%.2f", this.el[i][this.GetLastIdxKol()].abs());
                             if(this.GetLastIdxKol()-j-1 != 0) System.out.printf("X^%d", this.GetLastIdxKol()-j-1);
                             loop = false;
                             cnt++;
