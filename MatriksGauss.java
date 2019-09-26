@@ -17,6 +17,17 @@ public class MatriksGauss extends Matriks{
 		return Mtemp;
 	}
 
+    public MatriksInterpolasi GaussToInterpolasi(){
+        int i,j;
+		MatriksInterpolasi Mtemp = new MatriksInterpolasi(this.NB, this.NK);
+		for(i=this.GetFirstIdxBrs();i<=this.GetLastIdxBrs();i++){
+			for(j=this.GetFirstIdxKol();j<=this.GetLastIdxKol();j++){
+				Mtemp.el[i][j]=this.el[i][j];
+			}
+		}
+		return Mtemp;
+    } 
+
     public MatriksGauss Echelon(boolean augmented){
         float temp, mult;
         int i,j,k, augLim, p,q;
@@ -90,15 +101,18 @@ public class MatriksGauss extends Matriks{
     }
 
     public void Solver(){
-        int i,j, cnt,fIdx;
+        int i,j, k,cnt;
         int[] nNull = new int[this.GetLastIdxBrs()+1]; 
+        int[] fIdx = new int[this.GetLastIdxBrs()+1]; 
+        int[] lIdx = new int[this.GetLastIdxBrs()+1]; 
         boolean loop = true;
         for(i=this.GetLastIdxBrs(); i>=this.GetFirstIdxBrs() && loop; i--){
             cnt=0;
-            fIdx=-1;
+            fIdx[i]=-1;
             for(j=this.GetLastIdxKol() - 1; j>=this.GetFirstIdxKol(); j--){
                 if(this.el[i][j]!=0){
-                    if(cnt==0)fIdx = j;
+                    if(cnt==0)fIdx[i] = j;
+                    lIdx[i]= j;
                     cnt++;                
                 }
             }
@@ -109,30 +123,51 @@ public class MatriksGauss extends Matriks{
             }
             else if(cnt==1){
                 for(j=i-1; j>=this.GetFirstIdxBrs(); j--){
-                    this.el[j][this.GetLastIdxKol()]-=this.el[j][fIdx] * this.el[i][this.GetLastIdxKol()];
-                    this.el[j][fIdx] = 0;
+                    this.el[j][this.GetLastIdxKol()]-=this.el[j][fIdx[i]] * this.el[i][this.GetLastIdxKol()];
+                    this.el[j][fIdx[i]] = 0;
                 }
             }
         }
+
         if (loop){
-            System.out.println("Solusi SPL :");
+            System.out.println("Solusi dari SPL tersebut adalah");
             for(i=this.GetFirstIdxBrs(); i<=this.GetLastIdxBrs(); i++){
-                cnt = 0;
-                for(j=this.GetFirstIdxKol(); j<=this.GetLastIdxKol()-1; j++){
-                    if(this.el[i][j]!=0){
-                        if(cnt!=0) System.out.printf("+ ");
-                        if (this.el[i][j]!=1) System.out.printf("%.2f", this.el[i][j]); 
-                        System.out.printf("X%d ", this.GetLastIdxKol()-j);
-                        cnt++;
-                    } 
-                    
+                if(nNull[i]==1){
+                    if (this.el[i][fIdx[i]]!=1) System.out.printf("%.2f", this.el[i][fIdx[i]]); 
+                    System.out.printf("X%d ", fIdx[i]);
+                    System.out.printf("= %.3f", this.el[i][this.GetLastIdxKol()]);
+                    System.out.printf("%n");
                 }
-                if (nNull[i]>0) System.out.printf("= %.3f", this.el[i][this.GetLastIdxKol()]);
-                System.out.printf("%n");
+                else if(nNull[i]>1){
+                    cnt = 0;
+                    for(j=lIdx[i]; cnt < nNull[i]-1; j++){
+                        if(this.el[i][j]!=0){
+                            System.out.printf("X%d ", j);
+                            System.out.printf("= t%d", j);
+                            System.out.printf("%n");
+                            cnt++;
+                        }
+                    }
+
+                    System.out.printf("X%d =", fIdx[i]);
+                    if (this.el[i][this.GetLastIdxKol()]!=0) System.out.printf("%.3f", this.el[i][this.GetLastIdxKol()]);
+                    cnt = 0;
+                    for(j=lIdx[i]; cnt < nNull[i]-1; j++){
+                        if(this.el[i][j]!=0){
+                            System.out.printf(" - ");
+                            if (this.el[i][j]!=1) System.out.printf("%.2f", this.el[i][j]); 
+                            System.out.printf("t%d", j);
+                            cnt++;
+                        }
+                    }
+                    System.out.printf("%n");
+                }
             }
         }
     }
 }
 
     
+
+
 
