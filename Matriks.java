@@ -1,8 +1,9 @@
-import java.util.Scanner;
+import java.math.*; 
+import java.util.*;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
-
+import java.io.*;
 public class Matriks{
     //Atribut
 	int NB;
@@ -50,7 +51,7 @@ public class Matriks{
 				if(j!=this.NK){
 					System.out.print(this.el[i][j]+" ");
 				}else{
-					System.out.println(this.el[i][j]);
+					System.out.println(this.el[i][j].setScale(4, RoundingMode.HALF_UP));
 				}
 			}
 		}
@@ -74,7 +75,7 @@ public class Matriks{
 		return Mtmp;
 	}
 	
-	public Matriks KaliKons(int K){
+	public Matriks KaliKons(float K){
 		//KAMUS LOKAL
 		int i,j;
 		Matriks tmp;
@@ -82,7 +83,7 @@ public class Matriks{
 		tmp=new Matriks(this.NB,this.NK);
 		for(i=1;i<=this.NB;i++){
 			for(j=1;j<=this.NK;j++){
-				tmp.el[i][j]=K*this.el[i][j];
+				tmp.el[i][j]=this.el[i][j]*K;
 			}
 		}
 		return tmp;
@@ -136,7 +137,7 @@ public class Matriks{
 			for(j=1;j<=M2.NK;j++){
 				tmp.el[i][j]=0;
 				for(k=1;k<=this.NK;k++){
-					tmp.el[i][j]+=this.el[i][k]*M2.el[k][j];
+					tmp.el[i][j]=tmp.el[i][j]+this.el[i][k]*M2.el[k][j];
 				}
 			}
 		}
@@ -169,7 +170,7 @@ public class Matriks{
 	public void SwapBaris(int s, int d){
 		//KAMUS LOKAL
 		int j;
-		float tmp;
+		Float tmp;
 		//ALGORITMA
 		for(j=1;j<=this.NK;j++){
 			tmp=this.el[s][j];
@@ -180,7 +181,7 @@ public class Matriks{
 	public void SwapKolom(int s, int d){
 		//KAMUS LOKAL
 		int i;
-		float tmp;
+		Float tmp;
 		//ALGORITMA
 		for(i=1;i<=this.NB;i++){
 			tmp=this.el[i][s];
@@ -189,7 +190,7 @@ public class Matriks{
 		}
 	}
 	
-	public int SearchBaris(int i, int X){
+	public int SearchBaris(int i, Float X){
 		//Mencari X di baris ke-i pada matriks M
 		//return indeks, jika tidak ada akan mengembalikan nilai 0
 		
@@ -208,7 +209,7 @@ public class Matriks{
 		return indeks;
 	}
 	
-	public int SearchKolom(int j, int X){
+	public int SearchKolom(int j, Float X){
 		//Mencari X di kolom ke-j pada matriks M
 		//return indeks, jika tidak ada akan mengembalikan nilai 0
 		
@@ -259,7 +260,7 @@ public class Matriks{
 		return tmp;
 	}
 	
-	public void TambahKBaris(int RAw, int RAkh, int K){
+	public void TambahKBaris(int RAw, int RAkh, Float K){
 		//I.S : Matriks terdefinisi
 		//F.S : Menambahkan RAw dengan K kali RAkh
 		
@@ -267,7 +268,7 @@ public class Matriks{
 		int j;
 		//ALGORITMA
 		for(j=1;j<=this.NK;j++){
-			this.el[RAw][j] += K*this.el[RAkh][j];
+			this.el[RAw][j] = this.el[RAw][j]+this.el[RAkh][j]*K;
 		}
 	}
 	
@@ -300,35 +301,37 @@ public class Matriks{
 		}
 		this.NK-=1;
 	}
-	public float Determinan(){
-		//KAMUS LOKAL
-		int i,j;
+
+	public Float Determinan(){
 		float res;
-		//ALGORITMA
-		if(this.IsBujurSangkar()){
-			if(this.NB==1 && this.NK==1){
-				return this.el[1][1];
-			}else if(this.NB==2 && this.NK==2){
-				return this.el[1][1]*this.el[2][2]-this.el[1][2]*this.el[2][1];
-			}else{
-				res=0;
-				for(i=this.GetFirstIdxKol();i<=this.GetLastIdxKol();i++){
-					if(i%2==1){
-						res+=this.el[1][i]*this.Minor(1,i);
-					}else{
-						res-=this.el[1][i]*this.Minor(1,i);
-					}
-				}
-				return res;
-			}
-        }else{
-        	return -99999;
-        }
+	    int i,j,k,cnt;
+	    if (this.NK==1){
+	        res = this.el[this.GetFirstIdxBrs()][this.GetFirstIdxBrs()];
+	    }
+	    else{
+	        res = 0;
+	        Matriks Ma;
+	        Ma=new Matriks(this.NB-1,this.NK-1);
+	        for(i=this.GetFirstIdxBrs();i<=this.GetLastIdxBrs();i++){
+	            for(j=this.GetFirstIdxBrs()+1;j<=this.GetLastIdxBrs();j++){
+	                cnt=0;
+	                for(k=this.GetFirstIdxBrs();k<=this.GetLastIdxBrs();k++){
+	                    if(k==i) cnt=-1;
+	                    else Ma.el[j-1][k+cnt] = this.el[j][k];
+	                }
+	            }
+	            if (this.el[this.GetFirstIdxBrs()][i]!=0){
+	            	if(i%2==1)	res += this.el[this.GetFirstIdxBrs()][i]* Ma.Determinan();
+	            		else res -= this.el[this.GetFirstIdxBrs()][i]*Ma.Determinan();
+	            }
+	        }
+	    }
+	    return res;
 	}
 	
-	public float Minor(int r, int c){
+	public Float Minor(int r, int c){
 		//KAMUS LOKAL
-		float res;
+		Float res;
 		int i,j;
 		Matriks tmp;
 		//ALGORITMA
@@ -365,9 +368,9 @@ public class Matriks{
 		//ALGORITMA
 		return (this.NB==M.NB && this.NK==M.NK);
 	}
-	public float Cramer(int c){
+	public Float Cramer(int c){
 		//KAMUS LOKAL
-		float det;
+		Float det;
 		Matriks tmp;
 		//ALGORITMA
 		tmp=new Matriks(this.NB,this.NK);
@@ -403,6 +406,20 @@ public class Matriks{
 		}
 		return Mtemp;
 	}
+
+	public MatriksInterpolasi MatriksToInterpolasi(){
+		//KAMUS LOKAL
+		int i,j;
+		//ALGORITMA
+		MatriksInterpolasi Mtemp = new MatriksInterpolasi(this.NB, this.NK);
+		for(i=this.GetFirstIdxBrs();i<=this.GetLastIdxBrs();i++){
+			for(j=this.GetFirstIdxKol();j<=this.GetLastIdxKol();j++){
+				Mtemp.el[i][j]=this.el[i][j];
+			}
+		}
+		return Mtemp;
+	}
+
 	public void inputFile(String s){
 		//KAMUS LOKAL
 		int i,j,r,c,col;
@@ -430,6 +447,13 @@ public class Matriks{
 		    System.err.format("IOException: %s%n", e);
 		}
 	}
+
+	public Float KaliDiagonalUtama(){
+		Float Res = new Float(1);
+		for(int i=this.GetFirstIdxBrs(); i<=this.GetLastIdxBrs();i++) Res = Res*(this.el[i][i]);
+		return Res;
+	}
+
 	public void writeFile(){
 	//KAMUS LOKAL
 		int i,j;
