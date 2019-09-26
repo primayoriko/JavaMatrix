@@ -41,7 +41,7 @@ public class MatriksGauss extends Matriks{
             q = j-1; Fnd = false;
             do {
                 q++;
-                Fnd = (Mtemp.el[q][i].CompareTo(BigDecimal.ZERO)!=0);
+                Fnd = (Mtemp.el[q][i].compareTo(BigDecimal.ZERO)!=0);
             } while (!Fnd && q<Mtemp.GetLastIdxBrs());
 
             if(Fnd){
@@ -58,10 +58,10 @@ public class MatriksGauss extends Matriks{
                 }
 
                 for(k = j+1; k<= Mtemp.GetLastIdxBrs(); k++){
-                    if (Mtemp.el[k][i].CompareTo(BigDecimal.ZERO)!=0){
+                    if (Mtemp.el[k][i].compareTo(BigDecimal.ZERO)!=0){
                         mult = Mtemp.el[k][i].divide(Mtemp.el[j][i], 10, RoundingMode.HALF_UP); 
                         for (p=i; p<=Mtemp.GetLastIdxKol(); p++){
-                            Mtemp.el[k][p] =  Mtemp.el[k][p].subtract(mult.multiply(Mtemp.el[j][p], 10, RoundingMode.HALF_UP));
+                            Mtemp.el[k][p] =  Mtemp.el[k][p].subtract(mult.multiply(Mtemp.el[j][p]));
                         }
                     }
                 } 
@@ -81,7 +81,7 @@ public class MatriksGauss extends Matriks{
         for(i= augLim;i>=Mtemp.GetFirstIdxKol();i--){
             Fnd = false; r=-1;
             for(j = Mtemp.GetLastIdxBrs(); j>= Mtemp.GetFirstIdxBrs(); j--){
-                if(Mtemp.el[j][i].CompareTo(BigDecimal.ZERO)!=0){
+                if(Mtemp.el[j][i].compareTo(BigDecimal.ZERO)!=0){
                     if (!Fnd){
                         Fnd = true;
                         r= j;
@@ -108,14 +108,14 @@ public class MatriksGauss extends Matriks{
             cnt=0;
             fIdx[i]=-1;
             for(j=this.GetLastIdxKol() - 1; j>=this.GetFirstIdxKol(); j--){
-                if(this.el[j][i].CompareTo(BigDecimal.ZERO)!=0){
+                if(this.el[j][i].compareTo(BigDecimal.ZERO)!=0){
                     if(cnt==0)fIdx[i] = j;
                     lIdx[i]= j;
                     cnt++;                
                 }
             }
             nNull[i]=cnt;
-            if(cnt==0 && this.el[i][this.GetLastIdxKol()].CompareTo(BigDecimal.ZERO)!=0){
+            if(cnt==0 && this.el[i][this.GetLastIdxKol()].compareTo(BigDecimal.ZERO)!=0){
                 System.out.printf("Tidak Ada Solusi Valid%n");
                 loop = false;
             }
@@ -131,7 +131,7 @@ public class MatriksGauss extends Matriks{
             System.out.println("Solusi dari SPL tersebut adalah");
             for(i=this.GetFirstIdxBrs(); i<=this.GetLastIdxBrs(); i++){
                 if(nNull[i]==1){
-                    if (this.el[i][fIdx[i]].CompareTo(BigDecimal.ONE)!=0) System.out.printf("%.2f", this.el[i][fIdx[i]]); 
+                    if (this.el[i][fIdx[i]].compareTo(BigDecimal.ONE)!=0) System.out.printf("%.2f", this.el[i][fIdx[i]]); 
                     System.out.printf("X%d ", fIdx[i]);
                     System.out.printf("= %.3f", this.el[i][this.GetLastIdxKol()]);
                     System.out.printf("%n");
@@ -139,7 +139,7 @@ public class MatriksGauss extends Matriks{
                 else if(nNull[i]>1){
                     cnt = 0;
                     for(j=lIdx[i]; cnt < nNull[i]-1; j++){
-                        if(this.el[i][j].CompareTo(BigDecimal.ZERO)!=0){
+                        if(this.el[i][j].compareTo(BigDecimal.ZERO)!=0){
                             System.out.printf("X%d ", j);
                             System.out.printf("= t%d", j);
                             System.out.printf("%n");
@@ -148,12 +148,12 @@ public class MatriksGauss extends Matriks{
                     }
 
                     System.out.printf("X%d =", fIdx[i]);
-                    if (this.el[i][this.GetLastIdxKol()].CompareTo(BigDecimal.ZERO)!=0) System.out.printf("%.3f", this.el[i][this.GetLastIdxKol()]);
+                    if (this.el[i][this.GetLastIdxKol()].compareTo(BigDecimal.ZERO)!=0) System.out.printf("%.3f", this.el[i][this.GetLastIdxKol()]);
                     cnt = 0;
                     for(j=lIdx[i]; cnt < nNull[i]-1; j++){
-                        if(this.el[i][j].CompareTo(BigDecimal.ZERO)!=0){
+                        if(this.el[i][j].compareTo(BigDecimal.ZERO)!=0){
                             System.out.printf(" - ");
-                            if (this.el[i][j].CompareTo(BigDecimal.ONE)!=0) System.out.printf("%.2f", this.el[i][j]); 
+                            if (this.el[i][j].compareTo(BigDecimal.ONE)!=0) System.out.printf("%.2f", this.el[i][j]); 
                             System.out.printf("t%d", j);
                             cnt++;
                         }
