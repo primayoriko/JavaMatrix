@@ -1,14 +1,14 @@
 import java.math.BigDecimal; 
-import java.util.Scanner;
+import java.util.*;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
-
+import java.io.*;
 public class Matriks{
     //Atribut
 	int NB;
 	int NK;
-	float[][] el = new float[1001][1001];
+	BigDecimal[][] el = new BigDecimal[1001][1001];
 	
 	//METHOD:
 	//Konstruktor
@@ -20,7 +20,7 @@ public class Matriks{
 		this.NK=nk;
 		for(i=1;i<=1000;i++){
 			for(j=1;j<=1000;j++){
-				this.el[i][j]=0;
+				this.el[i][j]=BigDecimal.ZERO;
 			}
 		}
 	}
@@ -37,7 +37,7 @@ public class Matriks{
 		this.NK=n;
 		for(i=1;i<=this.NB;i++){
 			for(j=1;j<=this.NK;j++){
-				this.el[i][j]=in.nextFloat();
+				this.el[i][j]=in.nextBigDecimal();
 			}
 		}
 	}
@@ -60,7 +60,7 @@ public class Matriks{
 	public Matriks Transpose(){
 		//KAMUS LOKAL
 		int i,j,b,k;
-		float tmp;
+		BigDecimal tmp;
 		Matriks Mtmp;
 		//ALGORITMA
 		Mtmp=new Matriks(this.NB,this.NK);
@@ -75,7 +75,7 @@ public class Matriks{
 		return Mtmp;
 	}
 	
-	public Matriks KaliKons(int K){
+	public Matriks KaliKons(BigDecimal K){
 		//KAMUS LOKAL
 		int i,j;
 		Matriks tmp;
@@ -83,7 +83,7 @@ public class Matriks{
 		tmp=new Matriks(this.NB,this.NK);
 		for(i=1;i<=this.NB;i++){
 			for(j=1;j<=this.NK;j++){
-				tmp.el[i][j]=K*this.el[i][j];
+				tmp.el[i][j]=this.el[i][j].multiply(K);
 			}
 		}
 		return tmp;
@@ -107,7 +107,7 @@ public class Matriks{
 		tmp=new Matriks(this.NB,this.NK);
 		for(i=1;i<=this.NB;i++){
 			for(j=1;j<=this.NK;j++){
-				tmp.el[i][j]=this.el[i][j]+M2.el[i][j];
+				tmp.el[i][j]=this.el[i][j].add(M2.el[i][j]);
 			}
 		}
 		return tmp;
@@ -121,7 +121,7 @@ public class Matriks{
 		tmp=new Matriks(this.NB,this.NK);
 		for(i=1;i<=this.NB;i++){
 			for(j=1;j<=this.NK;j++){
-				tmp.el[i][j]=this.el[i][j]-M2.el[i][j];
+				tmp.el[i][j]=this.el[i][j].subtract(M2.el[i][j]);
 			}
 		}
 		return tmp;
@@ -135,9 +135,9 @@ public class Matriks{
 		tmp=new Matriks(this.NB,M2.NK);
 		for(i=1;i<=this.NB;i++){
 			for(j=1;j<=M2.NK;j++){
-				tmp.el[i][j]=0;
+				tmp.el[i][j]=BigDecimal.ZERO;
 				for(k=1;k<=this.NK;k++){
-					tmp.el[i][j]+=this.el[i][k]*M2.el[k][j];
+					tmp.el[i][j]=tmp.el[i][j].add(this.el[i][k].multiply(M2.el[k][j]));
 				}
 			}
 		}
@@ -170,7 +170,7 @@ public class Matriks{
 	public void SwapBaris(int s, int d){
 		//KAMUS LOKAL
 		int j;
-		float tmp;
+		BigDecimal tmp;
 		//ALGORITMA
 		for(j=1;j<=this.NK;j++){
 			tmp=this.el[s][j];
@@ -181,7 +181,7 @@ public class Matriks{
 	public void SwapKolom(int s, int d){
 		//KAMUS LOKAL
 		int i;
-		float tmp;
+		BigDecimal tmp;
 		//ALGORITMA
 		for(i=1;i<=this.NB;i++){
 			tmp=this.el[i][s];
@@ -260,7 +260,7 @@ public class Matriks{
 		return tmp;
 	}
 	
-	public void TambahKBaris(int RAw, int RAkh, int K){
+	public void TambahKBaris(int RAw, int RAkh, BigDecimal K){
 		//I.S : Matriks terdefinisi
 		//F.S : Menambahkan RAw dengan K kali RAkh
 		
@@ -268,7 +268,7 @@ public class Matriks{
 		int j;
 		//ALGORITMA
 		for(j=1;j<=this.NK;j++){
-			this.el[RAw][j] += K*this.el[RAkh][j];
+			this.el[RAw][j] = this.el[RAw][j].add(this.el[RAkh][j].multiply(K));
 		}
 	}
 	
@@ -301,35 +301,35 @@ public class Matriks{
 		}
 		this.NK-=1;
 	}
-	public float Determinan(){
+	public BigDecimal Determinan(){
 		//KAMUS LOKAL
 		int i,j;
-		float res;
+		BigDecimal res;
 		//ALGORITMA
 		if(this.IsBujurSangkar()){
 			if(this.NB==1 && this.NK==1){
 				return this.el[1][1];
 			}else if(this.NB==2 && this.NK==2){
-				return this.el[1][1]*this.el[2][2]-this.el[1][2]*this.el[2][1];
+				return this.el[1][1].multiply(this.el[2][2]).subtract(this.el[1][2].multiply(this.el[2][1]));
 			}else{
-				res=0;
+				res=BigDecimal.ZERO;
 				for(i=this.GetFirstIdxKol();i<=this.GetLastIdxKol();i++){
 					if(i%2==1){
-						res+=this.el[1][i]*this.Minor(1,i);
+						res=res.add(this.el[1][i].multiply(this.Minor(1,i)));
 					}else{
-						res-=this.el[1][i]*this.Minor(1,i);
+						res=res.subtract(this.el[1][i].multiply(this.Minor(1,i)));
 					}
 				}
 				return res;
 			}
         }else{
-        	return -99999;
+        	return BigDecimal.ZERO;
         }
 	}
 	
-	public float Minor(int r, int c){
+	public BigDecimal Minor(int r, int c){
 		//KAMUS LOKAL
-		float res;
+		BigDecimal res;
 		int i,j;
 		Matriks tmp;
 		//ALGORITMA
@@ -366,9 +366,9 @@ public class Matriks{
 		//ALGORITMA
 		return (this.NB==M.NB && this.NK==M.NK);
 	}
-	public float Cramer(int c){
+	public BigDecimal Cramer(int c){
 		//KAMUS LOKAL
-		float det;
+		BigDecimal det;
 		Matriks tmp;
 		//ALGORITMA
 		tmp=new Matriks(this.NB,this.NK);
@@ -418,7 +418,7 @@ public class Matriks{
 			Scanner scanner = new Scanner(line);
 			c=1;
 			while(scanner.hasNext()){
-				this.el[r][c]=scanner.nextFloat();
+				this.el[r][c]=scanner.nextBigDecimal();
 				c++;
 			}
 			col=c-1;
