@@ -51,7 +51,7 @@ public class Matriks{
 				if(j!=this.NK){
 					System.out.print(this.el[i][j]+" ");
 				}else{
-					System.out.println(this.el[i][j]);
+					System.out.println(this.el[i][j].setScale(4, RoundingMode.HALF_UP));
 				}
 			}
 		}
@@ -301,28 +301,16 @@ public class Matriks{
 		}
 		this.NK-=1;
 	}
+
 	public BigDecimal Determinan(){
 		//KAMUS LOKAL
 		int i,j;
 		BigDecimal res;
 		//ALGORITMA
 		if(this.IsBujurSangkar()){
-			if(this.NB==1 && this.NK==1){
-				return this.el[1][1];
-			}else if(this.NB==2 && this.NK==2){
-				return this.el[1][1].multiply(this.el[2][2]).subtract(this.el[1][2].multiply(this.el[2][1]));
-			}else{
-				res=BigDecimal.ZERO;
-				for(i=this.GetFirstIdxKol();i<=this.GetLastIdxKol();i++){
-					if(i%2==1){
-						res=res.add(this.el[1][i].multiply(this.Minor(1,i)));
-					}else{
-						res=res.subtract(this.el[1][i].multiply(this.Minor(1,i)));
-					}
-				}
-				return res;
-			}
-        }else{
+			 return this.MatriksToGauss().Echelon(false).EchelonReduc(false).KaliDiagonalUtama();
+        }
+		else{
         	return BigDecimal.ZERO;
         }
 	}
@@ -445,6 +433,13 @@ public class Matriks{
 		    System.err.format("IOException: %s%n", e);
 		}
 	}
+
+	public BigDecimal KaliDiagonalUtama(){
+		BigDecimal Res = new BigDecimal(1);
+		for(int i=this.GetFirstIdxBrs(); i<=this.GetLastIdxBrs();i++) Res = Res.multiply(this.el[i][i]);
+		return Res;
+	}
+
 	public void writeFile(){
 	//KAMUS LOKAL
 		int i,j;
