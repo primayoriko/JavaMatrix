@@ -2,12 +2,15 @@ import java.util.Scanner;
 
 public class DriverMatriks{
     public static Scanner input = new Scanner(System.in);
-    public static int inputnum;
     public static boolean loop;
     public static int[] inputvar = new int[20];
 
     public static void mainMenu(){
-        System.out.println("MENU");
+        padding();
+        System.out.println("                                      PROGRAM MATRIKS");
+        padding();
+        System.out.println("   MENU");
+        System.out.println();
         System.out.println("1. Sistem Persamaan Linier");
         System.out.println("2. Determinan");
         System.out.println("3. Matriks Balikan");
@@ -15,23 +18,30 @@ public class DriverMatriks{
         System.out.println("5. Adjoin");
         System.out.println("6. Interpolasi Polinom");
         System.out.println("7. Keluar");
+        System.out.println();
         inputMainMenu();
     }
-
-    public static Matriks menuInputMatriks(){
-        System.out.println("Pilih metode Input:");
-        System.out.println("1. Input Langsung Console");
-        System.out.println("2. Input dari File");
-        return inputMatriks();
-    }
-
-    public static void menu1(){
-        System.out.println("SUBMENU 1");
+    
+    public static void menu1SPL(){
+        padding();
+        System.out.println("   SUBMENU 1");
+        System.out.println();
         System.out.println("1. Metode eliminasi Gauss");
         System.out.println("2. Metode eliminasi Gauss-Jordan");
         System.out.println("3. Metode matriks balikan");
         System.out.println("4. Kaidah Cramer");
+        System.out.println();
         inputMenu1();
+    }
+
+    public static Matriks menuInputMatriks(){
+        padding();
+        System.out.println("   Pilih metode Input:");
+        System.out.println();   
+        System.out.println("1. Input Langsung Console");
+        System.out.println("2. Input dari File");
+        System.out.println();
+        return inputMatriks();
     }
 
     public static Matriks inputMatriks(){
@@ -47,7 +57,6 @@ public class DriverMatriks{
                 break;
             default:
                 System.out.println("Input salah, coba divalidasi kembali.");
-                //mainMenu();
                 break;
         }
         return M;
@@ -57,26 +66,29 @@ public class DriverMatriks{
         inputting(1, "pilihan menu");
         switch (inputvar[1]){
             case 1 :
-                menu1();
+                menu1SPL();
                 break;
             case 2:
-
+                menu2Determinan();
                 break;
             case 3:
+                menu3Invers();
                 break;
             case 4:
+                menu4Kofaktor();
                 break;
             case 5:
+                menu5Adjoin();
                 break;
             case 6:
-                menuInterpolasi();
+                menu6Interpolasi();
                 break;
             case 7:
+                System.out.printf("Terima kasih telah memakai aplikasi.%nSelamat Tinggal.%n");
                 loop = false;
                 break;
             default:
                 System.out.println("Input salah, coba divalidasi kembali.");
-                //mainMenu();
                 break;
         }
     }
@@ -101,9 +113,58 @@ public class DriverMatriks{
         }
     }
 
+    public static void menu2Determinan(){
+        Matriks M = menuInputMatriks();
+        if(!M.IsEmpty()){
+            System.out.printf("Jadi, determinan Matriks ini adalah %.4f%n", M.Determinan());
+        }
+    }
+
+    public static void menu3Invers(){
+        Matriks M = menuInputMatriks();
+        if(!M.IsEmpty()){
+
+        }
+    }
+
+    public static void menu4Kofaktor(){
+        Matriks M = menuInputMatriks();
+        if(!M.IsEmpty()){
+            System.out.println("Kofaktor dari Matriks ini adalah");
+            System.out.println();
+            M.MatriksToInverse().Kofaktor().TulisMATRIKS();
+        }
+    }
+
+    public static void menu5Adjoin(){
+        Matriks M = menuInputMatriks();
+        if(!M.IsEmpty()){
+            System.out.println("Adjoin dari Matriks ini adalah");
+            System.out.println();
+            M.MatriksToInverse().Adjoint().TulisMATRIKS();
+        }
+    }
+
+    public static void menu6Interpolasi(){
+        System.out.println();
+        System.out.println("Note : Untuk input data interpolasi, banyak baris adalah jumlah titik data yang dimiliki dan banyak");
+        System.out.println("       kolom adalah 2, lalu masukkan data tiap point dalam bentuk pair x dan dilanjutkan y");
+        Matriks M = menuInputMatriks();
+        if(!M.IsEmpty()){
+            if(M.GetLastIdxKol()!=2){
+                System.out.println("Error, masukkan dalam bentuk pair x dan dilanjutkan y (NK = 2)");
+            }
+            else{
+                M.MatriksToInterpolasi().InterpretasiData().InterpolasiToGauss().Echelon(true).EchelonReduc(true).GaussToInterpolasi().Solver();
+            }
+        }
+    }
+
     public static void Gauss(){
         Matriks M = menuInputMatriks();
         if(!M.IsEmpty()){
+            System.out.println("Dengan metode eliminasi Gauss diperoleh Matriks");
+            System.out.println();
             M.MatriksToGauss().Echelon(true).TulisMATRIKS();
             M.MatriksToGauss().Echelon(true).Solver();
         }
@@ -112,6 +173,8 @@ public class DriverMatriks{
     public static void GaussJordan(){
         Matriks M = menuInputMatriks();
         if(!M.IsEmpty()){
+            System.out.println("Dengan metode eliminasi Gauss-Jordan diperoleh Matriks");
+            System.out.println();
             M.MatriksToGauss().Echelon(true).EchelonReduc(true).TulisMATRIKS();
             M.MatriksToGauss().Echelon(true).EchelonReduc(true).Solver();
         }
@@ -127,8 +190,12 @@ public class DriverMatriks{
             M.ResizeMATRIKS(M.GetLastIdxBrs(), M.GetLastIdxKol()-1);
             if(M.IsBujurSangkar()){
                 if(M.Determinan()!=0){
+                    System.out.println("Diperoleh Matriks Inverse berikut");
                     M.MatriksToInverse().Inverse().TulisMATRIKS();
+                    System.out.println();
+                    System.out.println("Diperoleh Matriks Koefisien berikut");
                     B.TulisMATRIKS();
+                    System.out.println();
                     M.MatriksToInverse().Inverse().KaliMATRIKS(B).MatriksToInverse().Solver();
                 }
                 else{
@@ -141,14 +208,17 @@ public class DriverMatriks{
         }
     }
 
-    public static void menuInterpolasi(){
-        
-    }
-
     public static void inputting(int i, String A){
         String s = "Masukan input untuk " + A + " : ";
         System.out.print(s);
         inputvar[i] = input.nextInt();
+    }
+
+    public static void padding(){
+        int i;
+        String S = "";
+        for (i=0;i<100;i++) S+="-";
+        System.out.printf("%n%s%n%s%n%n", S, S);
     }
 
     public static void main(String[] args){
