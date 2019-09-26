@@ -303,16 +303,30 @@ public class Matriks{
 	}
 
 	public BigDecimal Determinan(){
-		//KAMUS LOKAL
-		int i,j;
 		BigDecimal res;
-		//ALGORITMA
-		if(this.IsBujurSangkar()){
-			 return this.MatriksToGauss().Echelon(false).EchelonReduc(false).KaliDiagonalUtama();
-        }
-		else{
-        	return BigDecimal.ZERO;
-        }
+	    int i,j,k,cnt;
+	    if (this.NK==1){
+	        res = this.el[this.GetFirstIdxBrs()][this.GetFirstIdxBrs()];
+	    }
+	    else{
+	        res = BigDecimal.ZERO;
+	        Matriks Ma;
+	        Ma=new Matriks(this.NB-1,this.NK-1);
+	        for(i=this.GetFirstIdxBrs();i<=this.GetLastIdxBrs();i++){
+	            for(j=this.GetFirstIdxBrs()+1;j<=this.GetLastIdxBrs();j++){
+	                cnt=0;
+	                for(k=this.GetFirstIdxBrs();k<=this.GetLastIdxBrs();k++){
+	                    if(k==i) cnt=-1;
+	                    else Ma.el[j-1][k+cnt] = this.el[j][k];
+	                }
+	            }
+	            if (this.el[this.GetFirstIdxBrs()][i].compareTo(BigDecimal.ZERO)!=0){
+	            	if(i%2==1)	res = res.add(this.el[this.GetFirstIdxBrs()][i]).multiply( Ma.Determinan());
+	            		else res = res.subtract(this.el[this.GetFirstIdxBrs()][i]).multiply(Ma.Determinan());
+	            }
+	        }
+	    }
+	    return res;
 	}
 	
 	public BigDecimal Minor(int r, int c){
