@@ -1,29 +1,35 @@
-import System.util.Scanner;
+import java.util.Scanner;
 import java.lang.Math;
 
 public class MatriksInterpolasi extends Matriks{
-    MatriksInterpolasi(Matriks M){
-        this.CopyMatriks(M);
+    MatriksInterpolasi(int NB, int NK){
+        super(NB, NK);
     }
 
-    public void BacaInterpolasi(){
-        int i,j,deg;
-        deg = input.nextInt();
+    public MatriksGauss InterpolasiToGauss(){
+        int i,j;
+		MatriksGauss Mtemp = new MatriksGauss(this.NB, this.NK);
+		for(i=this.GetFirstIdxBrs();i<=this.GetLastIdxBrs();i++){
+			for(j=this.GetFirstIdxKol();j<=this.GetLastIdxKol();j++){
+				Mtemp.el[i][j]=this.el[i][j];
+			}
+		}
+		return Mtemp;
+    } 
 
-        Matriks dat = new Matriks(deg, deg+1);
-        float a,b;
-        for(i=dat.GetFirstIdxBrs(); i<=dat.GetLastIdxBrs(); i++){
-            a = input.nextFloat();
-            b = input.nextFloat();
-            for(j=dat.GetFirstIdxKol(); j<=dat.GetLastIdxKol() - 1; j++){
-                dat.el[i][j] = ((float)pow(a, GetLastIdxKol()-j));
+    public MatriksInterpolasi InterpretasiData(){
+        int i,j;
+        MatriksInterpolasi MI = new MatriksInterpolasi(this.GetLastIdxBrs(), this.GetLastIdxBrs()+1);
+        for(i=MI.GetFirstIdxBrs(); i<=MI.GetLastIdxBrs(); i++){
+            for(j=MI.GetFirstIdxKol(); j<=MI.GetLastIdxKol() - 1; j++){
+                MI.el[i][j] = ((float)Math.pow(this.el[i][1], MI.GetLastIdxKol()-j-1));
             }
-            dat.el[i][dat.GetLastIdxKol()]=b;
+            MI.el[i][MI.GetLastIdxKol()]=this.el[i][2];
         }
-        
+        return MI;
     }
 
-    public void InterpolationSolver(){
+    public void Solver(){
         int i,j, cnt,fIdx;
         boolean loop = true;
         for(i=this.GetLastIdxBrs(); i>=this.GetFirstIdxBrs() && loop; i--){
@@ -36,37 +42,40 @@ public class MatriksInterpolasi extends Matriks{
                 }
             }
             if(cnt==0 && this.el[i][this.GetLastIdxKol()]!=0){
-                System.out.printf("Tidak Ada Solusi Valid%n");
+                System.out.println("Tidak Ada Solusi Valid");
                 loop = false;
             }
             else if (cnt > 1){
-                System.out.printf("koefisien x tidak unik%n");
+                System.out.println("Koefisien X tidak unik");
                 loop = false;
             }
             else if(cnt==1){
                 for(j=i-1; j>=this.GetFirstIdxBrs(); j--){
-                    this.el[j][This.GetLastIdxKol()]-=this.el[j][fIdx] * this.el[i][this.GetLastIdxKol()];
+                    this.el[j][this.GetLastIdxKol()]-=this.el[j][fIdx] * this.el[i][this.GetLastIdxKol()];
                     this.el[j][fIdx] = 0;
                 }
             }
         }
         if (loop){
-            System.out.printf("f(X) = ");
+            System.out.println("Solusi dari Interpolasi titik-titik tersebut adalah");
+            System.out.print("f(X) = ");
             cnt = 0;
-            for(i=GetFirstIdxBrs(M);i<=GetLastIdxBrs(M);i++){
-                if(Elmt(M,i,GetLastIdxKol(M))!= 0){
+            for(i=this.GetFirstIdxBrs();i<=this.GetLastIdxBrs();i++){
+                if(this.el[i][this.GetLastIdxKol()]!= 0){
                     loop = true;
-                    for(j=GetFirstIdxKol(M);j<=GetLastIdxKol(M)-1 && loop;j++){
+                    for(j=this.GetFirstIdxKol();j<=this.GetLastIdxKol()-1 && loop;j++){
                         if(this.el[i][j]!=0){
-                            if(cnt!=0) printf(" + ");
-                            printf("%.2fX^%d", this.el[i][this.GetLastIdxKol()], this.GetLastIdxKol()-j);
+                            if(cnt!=0 && this.el[i][this.GetLastIdxKol()]>0) System.out.printf(" + ");
+                            if(this.el[i][this.GetLastIdxKol()]<0) System.out.printf(" - ");
+                            System.out.printf("%.2f", Math.abs(this.el[i][this.GetLastIdxKol()]));
+                            if(this.GetLastIdxKol()-j-1 != 0) System.out.printf("X^%d", this.GetLastIdxKol()-j-1);
                             loop = false;
                             cnt++;
                         }
                     }
                 }
             }
-            printf("%n");
+            System.out.printf("%n");
         }
     }
 }
