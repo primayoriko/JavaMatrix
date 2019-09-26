@@ -1,4 +1,4 @@
-import java.math.BigDecimal; 
+import java.math.*; 
 import java.util.*;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
@@ -404,6 +404,20 @@ public class Matriks{
 		}
 		return Mtemp;
 	}
+
+	public MatriksInterpolasi MatriksToInterpolasi(){
+		//KAMUS LOKAL
+		int i,j;
+		//ALGORITMA
+		MatriksInterpolasi Mtemp = new MatriksInterpolasi(this.NB, this.NK);
+		for(i=this.GetFirstIdxBrs();i<=this.GetLastIdxBrs();i++){
+			for(j=this.GetFirstIdxKol();j<=this.GetLastIdxKol();j++){
+				Mtemp.el[i][j]=this.el[i][j];
+			}
+		}
+		return Mtemp;
+	}
+
 	public void inputFile(String s){
 		//KAMUS LOKAL
 		int i,j,r,c,col;
