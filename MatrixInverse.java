@@ -1,5 +1,6 @@
 import java.util.Scanner;
-import java.lang.*;
+import java.lang.Math;
+import java.math.*;
 
 public class MatriksInverse extends Matriks{
     MatriksInverse(int NB, int NK){
@@ -18,7 +19,8 @@ public class MatriksInverse extends Matriks{
 	}
 
     public BigDecimal KofaktorVal(int i, int j){
-        return (BigDecimal(-1).pow(i+j).multiply(this.el[i][j]).multiply(this.Minor(i,j))); 
+        BigDecimal f = new BigDecimal(-1);
+        return (f.pow(i+j).multiply(this.el[i][j]).multiply(this.Minor(i,j))); 
     }
 
     public MatriksInverse Kofaktor(){
@@ -36,7 +38,8 @@ public class MatriksInverse extends Matriks{
     }
 
     public MatriksInverse Inverse(){
-        return this.Adjoint().KaliKons(BigDecimal.ONE.divide(this.Determinan(),10, RoundingMode.HALF_UP)).MatriksToInverse();
+        BigDecimal i = new BigDecimal(1);
+        return this.Adjoint().KaliKons(i.divide(this.Determinan(),10, RoundingMode.HALF_UP)).MatriksToInverse();
     }
 
     public void Solver(){
