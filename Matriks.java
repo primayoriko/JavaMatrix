@@ -190,7 +190,7 @@ public class Matriks{
 		}
 	}
 	
-	public int SearchBaris(int i, int X){
+	public int SearchBaris(int i, BigDecimal X){
 		//Mencari X di baris ke-i pada matriks M
 		//return indeks, jika tidak ada akan mengembalikan nilai 0
 		
@@ -201,7 +201,7 @@ public class Matriks{
 		indeks=0;
 		found=false;
 		for(j=this.GetFirstIdxKol();j<=this.GetLastIdxKol();j++){
-			if(this.el[i][j]==X && !found){
+			if(this.el[i][j].compareTo(X)==0 && !found){
 				indeks=j;
 				found=true;
 			}
@@ -209,7 +209,7 @@ public class Matriks{
 		return indeks;
 	}
 	
-	public int SearchKolom(int j, int X){
+	public int SearchKolom(int j, BigDecimal X){
 		//Mencari X di kolom ke-j pada matriks M
 		//return indeks, jika tidak ada akan mengembalikan nilai 0
 		
@@ -220,7 +220,7 @@ public class Matriks{
 		indeks=0;
 		found=false;
 		for(i=this.GetFirstIdxBrs();i<=this.GetLastIdxBrs();i++){
-			if(this.el[i][j]==X && !found){
+			if(this.el[i][j].compareTo(X)==0 && !found){
 				indeks=i;
 				found=true;
 			}
