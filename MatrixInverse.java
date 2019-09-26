@@ -6,6 +6,17 @@ public class MatriksInverse extends Matriks{
         super(NB,NK);
     }
 
+    public Matriks InverseToMatriks(){
+        int i,j;
+		Matriks Mtemp = new Matriks(this.NB, this.NK);
+		for(i=this.GetFirstIdxBrs();i<=this.GetLastIdxBrs();i++){
+			for(j=this.GetFirstIdxKol();j<=this.GetLastIdxKol();j++){
+				Mtemp.el[i][j]=this.el[i][j];
+			}
+		}
+		return Mtemp;
+	}
+
     public float KofaktorVal(int i, int j){
         return ((float)Math.pow(-1, i+j)) * this.el[i][j] * this.Minor(i,j); 
     }
@@ -29,21 +40,10 @@ public class MatriksInverse extends Matriks{
     }
 
     public void Solver(){
-        System.out.println("Solusi :");
+        System.out.println("Solusi dari SPL tersebut adalah");
         int i;
         for(i=this.GetFirstIdxBrs(); i<=this.GetLastIdxBrs(); i++){
-            System.out.printf("X%d = %.3f%n", this.GetLastIdxBrs()-i+1, this.el[i][this.GetFirstIdxKol()]);
+            System.out.printf("X%d = %.3f%n", i, this.el[i][this.GetFirstIdxKol()]);
         }
     }
-
-    public Matriks InverseToMatriks(){
-        int i,j;
-		Matriks Mtemp = new Matriks(this.NB, this.NK);
-		for(i=this.GetFirstIdxBrs();i<=this.GetLastIdxBrs();i++){
-			for(j=this.GetFirstIdxKol();j<=this.GetLastIdxKol();j++){
-				Mtemp.el[i][j]=this.el[i][j];
-			}
-		}
-		return Mtemp;
-	}
 }
