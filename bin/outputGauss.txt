@@ -1,0 +1,7 @@
+Solusi dari SPL tersebut adalah
+X1 = 1
+X3 = 3
+X4 =-5.0 - t1 - -1.0t3
+X4 =-5.0 - t1 - -1.0t3X2 = 2
+X3 = 3
+X4 =7.5 - t2 - 2.0t3

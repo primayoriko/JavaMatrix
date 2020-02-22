@@ -51,9 +51,12 @@ public class DriverMatriks{
             case 1 :
                 M.BacaMATRIKS();
                 break;
-            case 2:
-
-
+            case 2:            
+                System.out.println("Masukkan nama file : ");
+                String s;
+                s = input.nextLine();
+                s = input.nextLine();
+                M.inputFile(s);
                 break;
             default:
                 System.out.println("Input salah, coba divalidasi kembali.");
@@ -106,6 +109,7 @@ public class DriverMatriks{
                 MBalikan();
                 break;
             case 4:
+                MCramer();
                 break;
             default:
                 System.out.println("Input salah, coba divalidasi kembali.");
@@ -123,7 +127,28 @@ public class DriverMatriks{
     public static void menu3Invers(){
         Matriks M = menuInputMatriks();
         if(!M.IsEmpty()){
-
+            Matriks B = new Matriks(0,0);
+            B = M.CopyMATRIKS();
+            B.SwapKolom(B.GetFirstIdxKol(), B.GetLastIdxKol());
+            B.ResizeMATRIKS(B.GetLastIdxBrs(), 1);
+            M.ResizeMATRIKS(M.GetLastIdxBrs(), M.GetLastIdxKol()-1);
+            if(M.IsBujurSangkar()){
+                if(M.Determinan()!=0){
+                    System.out.println("Diperoleh Matriks Inverse berikut");
+                    M.MatriksToInverse().Inverse().TulisMATRIKS();
+                    System.out.println("Masukkan nama file untuk menyimpan matriks : ");
+                    String s;
+                    s = input.nextLine();
+                    s = input.nextLine();
+                    M.MatriksToInverse().Inverse().inputFile(s);
+                }
+                else{
+                    System.out.println("Error, determinan tidak boleh nol");
+                }
+            }
+            else{
+                System.out.println("Error, Matriks harus persegi");
+            } 
         }
     }
 
@@ -133,6 +158,11 @@ public class DriverMatriks{
             System.out.println("Kofaktor dari Matriks ini adalah");
             System.out.println();
             M.MatriksToInverse().Kofaktor().TulisMATRIKS();
+            System.out.println("Masukkan nama file untuk menyimpan matriks : ");
+            String s;
+            s = input.nextLine();
+            s = input.nextLine();
+            M.MatriksToInverse().Kofaktor().inputFile(s);
         }
     }
 
@@ -142,6 +172,11 @@ public class DriverMatriks{
             System.out.println("Adjoin dari Matriks ini adalah");
             System.out.println();
             M.MatriksToInverse().Adjoint().TulisMATRIKS();
+            System.out.println("Masukkan nama file untuk menyimpan matriks : ");
+            String s;
+            s = input.nextLine();
+           
+            M.MatriksToInverse().Adjoint().writeFile();
         }
     }
 
@@ -155,7 +190,7 @@ public class DriverMatriks{
                 System.out.println("Error, masukkan dalam bentuk pair x dan dilanjutkan y (NK = 2)");
             }
             else{
-                M.MatriksToInterpolasi().InterpretasiData().InterpolasiToGauss().Echelon(true).EchelonReduc(true).GaussToInterpolasi().Solver();
+                M.MatriksToInterpolasi().InterpretasiData().InterpolasiToGauss().Echelon(true).EchelonReduc(true).GaussToInterpolasi().writeInterpolasi();
             }
         }
     }
@@ -197,6 +232,7 @@ public class DriverMatriks{
                     B.TulisMATRIKS();
                     System.out.println();
                     M.MatriksToInverse().Inverse().KaliMATRIKS(B).MatriksToInverse().Solver();
+                    M.MatriksToInverse().Inverse().KaliMATRIKS(B).MatriksToInverse().writeInverse();
                 }
                 else{
                     System.out.println("Error, determinan tidak boleh nol");
@@ -205,6 +241,29 @@ public class DriverMatriks{
             else{
                 System.out.println("Error, Matriks harus persegi");
             } 
+        }
+    }
+
+    public static void MCramer(){
+        Matriks M = menuInputMatriks();
+        if(!M.IsEmpty()){
+            if(M.GetLastIdxKol()-1 == M.GetLastIdxBrs()){
+                Matriks M2 = M.CopyMATRIKS();
+                M2.ShrinkCol(M2.GetLastIdxKol());
+                float det = M2.Determinan();
+                if(det==0){
+                    System.out.println("Determinan tidak boleh nol");
+                }
+                else{
+                    System.out.println("Solusi dari SPL adalah:");
+                    for(int i=M2.GetFirstIdxKol();i<=M2.GetLastIdxKol();i++){
+                        System.out.printf("X%d = %.5f%n", i, M.Cramer(i)/det);
+                    }
+                }
+            }
+            else{
+                System.out.println("Matriks koefisien harus persegi");
+            }
         }
     }
 

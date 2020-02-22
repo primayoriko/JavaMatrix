@@ -51,7 +51,7 @@ public class Matriks{
 				if(j!=this.NK){
 					System.out.print(this.el[i][j]+" ");
 				}else{
-					System.out.println(this.el[i][j].setScale(4, RoundingMode.HALF_UP));
+					System.out.printf("%.4f%n", this.el[i][j]);
 				}
 			}
 		}
@@ -449,7 +449,7 @@ public class Matriks{
 	}
 
 	public Float KaliDiagonalUtama(){
-		Float Res = new Float(1);
+		Float Res = (float)1;
 		for(int i=this.GetFirstIdxBrs(); i<=this.GetLastIdxBrs();i++) Res = Res*(this.el[i][i]);
 		return Res;
 	}
