@@ -50,4 +50,4 @@ For this project you need:
 ## Issues
 -----------
 1. Masih ada sedikit masalah pada pencarian determinan (kompleksitas masih tinggi), lalu float menyebabkan akurasi pada desimal rendah
-2. BigDecimal branch try to solve accuracy problem, but still bug and need more development
+2. __BigDecimal branch__ try to solve accuracy problem, but still bug and need more development
