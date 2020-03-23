@@ -6,7 +6,7 @@
 Program untuk menjalankan berbagai fungsi di Matriks (Determinan, Kofaktor, Adjoint, Invers, serta melakukan berbagai Operasi Baris Elementer) dan implementasinya, seperti Menyelesaikan SPL dan juga Interpolasi.
 
 
-Prerequisite
+## Prerequisite
 -----------
 
 For this project you need:
@@ -51,7 +51,7 @@ For this project you need:
 5. Untuk input interpolasi dalam bentuk matriks, dimana jumlah persamaan sebagai baris, 
     dan perbaris adalah pair (x, y) sehingga jumlah kolomnya yaitu dua.
 	
-Issues
+## Issues
 -----------
 
 1. Masih ada sedikit masalah pada pencarian determinan (kompleksitas masih tinggi), lalu float menyebabkan akurasi pada desimal rendah
