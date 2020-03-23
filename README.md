@@ -15,21 +15,21 @@ For this project you need:
 ### By java binary (.class)
 1. Go to directory
 
-	bin/
+		bin/
 	
 	then execute in terminal
 	
-	java DriverMatriks.class
+		java DriverMatriks.class
 
 ### By java source code (.java) -> the advantages you can edit it as you wish
 1. Go to directory
 
-	src/
+		src/
 	
 	then execute in terminal
 	
-	javac DriverMatriks.java
-	java DriverMatriks.class
+		javac DriverMatriks.java
+		java DriverMatriks.class
 	
 
 ## How to Use
