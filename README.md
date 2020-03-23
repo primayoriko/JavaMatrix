@@ -5,8 +5,10 @@
 
 Program untuk menjalankan berbagai fungsi di Matriks (Determinan, Kofaktor, Adjoint, Invers, serta melakukan berbagai Operasi Baris Elementer) dan implementasinya, seperti Menyelesaikan SPL dan juga Interpolasi.
 
+
 Prerequisite
-------
+-----------
+
 For this project you need:
 1. [JDK](https://www.oracle.com/java/technologies/javase-downloads.html), I recommend using version later than 11
 
@@ -34,6 +36,7 @@ For this project you need:
 
 ## How to Use
 -------
+
 1. Ikuti instruksi untuk diarahkan menuju fungsi yang diinginkan
 
 2. Saat menginput matriks lewat konsol formatnya :
@@ -48,5 +51,7 @@ For this project you need:
 5. Untuk input interpolasi dalam bentuk matriks, dimana jumlah persamaan sebagai baris, 
     dan perbaris adalah pair (x, y) sehingga jumlah kolomnya yaitu dua.
 	
-	Note : Masih ada sedikit masalah pada pencarian determinan (kompleksitas masih tinggi), 
-			lalu float menyebabkan akurasi pada desimal rendah
+Issues
+-----------
+
+1. Masih ada sedikit masalah pada pencarian determinan (kompleksitas masih tinggi), lalu float menyebabkan akurasi pada desimal rendah
