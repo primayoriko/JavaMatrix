@@ -4,7 +4,7 @@
 Program untuk menjalankan berbagai fungsi di Matriks (Determinan, Kofaktor, Adjoint, Invers, serta melakukan berbagai Operasi Baris Elementer) dan implementasinya, seperti Menyelesaikan SPL dan juga Interpolasi.
 
 
-## Prerequisite
+## Requirements
 -----------
 For this project you need:
 1. [JDK](https://www.oracle.com/java/technologies/javase-downloads.html), I recommend using version later than 11
